@@ -1,0 +1,33 @@
+.wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 80px 20px;
+
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+
+}
+
+.add-btn{
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    background: inherit;
+    border: 0px;
+
+    align-self: center;
+
+    border-color: #4a4a4a;
+    box-shadow: inset 0px 0px 1px 1px rgba(10, 10, 10, 0.2);
+
+}
+
+.add-btn:active{
+    box-shadow: inset 2px 2px 2px rgba(10, 10, 10, 0.2);
+}
+
+.fa:before{
+    font-size: 48px;
+    color: #fff; 
+}

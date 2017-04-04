@@ -1,0 +1,25 @@
+.exit a {
+  color: white;
+}
+
+.exit a:active {
+  font-size: 18px;
+}
+
+
+.usertag-wrapper .tag {
+    cursor: pointer;
+}
+
+.usertag-wrapper .notifications {
+    color: white;
+}
+
+.usertag-wrapper .notifications:active {
+    font-size: 18px;
+}
+
+.userName {
+    font-size: 24px;
+    padding: 0px 10px;
+}

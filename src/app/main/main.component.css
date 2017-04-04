@@ -1,0 +1,50 @@
+.menu-wrapper {
+    display: flex;
+    justify-content: space-around;
+    margin: 0 auto;
+    padding-top: 100px;
+    flex-wrap: wrap;
+}
+
+.menu-wrapper .menu-item {
+    text-align: center;
+}
+
+.menu-item a {
+    color: white;
+    font-size: 2rem;
+    padding-bottom: 15px;
+    text-decoration: none;
+}
+
+.menu-item a.active {
+    text-decoration: underline;
+}
+
+.menu-item a:hover{
+    background: inherit;
+}
+
+.button:active{
+  box-shadow: none;
+}
+
+
+.an {
+  -vendor-animation-duration: 3s;
+  -vendor-animation-delay: 2s;
+  -vendor-animation-iteration-count: infinite;
+}
+
+app-user-tag {
+    position: fixed;
+    top: 10px;
+    right: 40px;
+
+      
+  -moz-user-select: -moz-none;
+  -o-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}

@@ -3,18 +3,58 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { Routes, RouterModule } from '@angular/router';
+
+
 import { AppComponent } from './app.component';
+import { MainComponent } from './main/main.component';
+import { AddComponent } from './main/add/add.component';
+import { RepeatComponent } from './main/repeat/repeat.component';
+import { LoginComponent } from './login/login.component';
+
+import { MasonryModule } from 'angular2-masonry';
+import { FlashMessagesModule } from 'angular2-flash-messages';
+import { InstantSearchPipe } from './_pipes/instant-search.pipe';
+
+import { AppService } from './_services/app.service';
+import { AuthService } from './_services/auth.service';
+
+import { AuthGuard } from './_guards/auth.guard';
+import { UserTagComponent } from './main/user-tag/user-tag.component';
+
+
+const appRoutes: Routes = [
+    { path: '', component: MainComponent, canActivate: [AuthGuard]},
+    { path: 'login', component: LoginComponent},
+
+    // otherwise redirect to home
+    { path: '**', redirectTo: '' },
+];
+
+
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MainComponent,
+    AddComponent,
+    RepeatComponent,
+    LoginComponent,
+    InstantSearchPipe,
+    UserTagComponent
   ],
   imports: [
+    RouterModule.forRoot(appRoutes),
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    MasonryModule,
+    FlashMessagesModule
   ],
-  providers: [],
+  providers: [AppService,
+              AuthService,
+              AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

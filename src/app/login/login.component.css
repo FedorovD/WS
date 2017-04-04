@@ -1,0 +1,18 @@
+.login-wrapper{
+    margin: 0 20px;
+    margin-top: 40px;
+}
+
+.login-wrapper form{
+    max-width: 600px;
+    margin: auto;
+
+    background: white;
+    padding: 25px 15px;
+    border-radius: 10px;
+}
+
+form p.control {
+    margin-bottom: 10px;
+}
+

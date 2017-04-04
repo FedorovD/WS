@@ -1,0 +1,23 @@
+{
+  "name": "wrdsstd-server",
+  "version": "1.0.0",
+  "description": "backend for wrdsstd app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "dependencies": {
+    "bcryptjs": "*",
+    "body-parser": "*",
+    "cors": "*",
+    "express": "*",
+    "jsonwebtoken": "*",
+    "mongoose": "*",
+    "mongoose-algolia": "^1.4.2",
+    "passport": "*",
+    "passport-jwt": "*"
+  },
+  "author": "FedorovD",
+  "license": "ISC"
+}

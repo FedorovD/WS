@@ -1,1 +1,49 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+    background-color: #3273DC;
+    overflow: auto;
+    height: 100%;
+}
+
+body {
+    position: absolute;
+    top: 5px;
+    left: 0px;
+    bottom: 5px;
+    right: 5px;
+    padding: 30px; 
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+/* Let's get this party started */
+::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #00D1B2; 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+	background: #00D1B2; 
+}
+
+.alert {
+  position: fixed;
+  z-index: 100;
+  top: 0px;
+  left: 40%;
+  width: 20%;
+  text-align: center;
+}

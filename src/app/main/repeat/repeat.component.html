@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="field search">
+    <div class="control is-expanded has-icon has-icon-left">
+      <input class="input is-large" type="text" placeholder="" [(ngModel)]="search" name="search">
+      <span class="icon is-medium">
+          <i class="fa fa-search"></i>
+        </span>
+    </div>
+  </div>
+
+  <masonry class="wrapper" [ngClass]="'animated fadeInLeft'" [options]="{ transitionDuration: '0.4s', fitWidth: true }">
+    <masonry-brick class="card" *ngFor="let word of words | instantSearch: search" (mouseover)='word.hover = true' (mouseleave)="word.hover = false">
+      <button class="delete" *ngIf="word.hover" (click)="onDelete(word);modalDelete.classList.toggle('is-active')"></button>
+      <div class="card-content">
+        <div class="media">
+          <div class="media-content">
+            <p class="title is-3">{{word.english}}</p>
+            <p class="subtitle is-6">{{word.russian}}</p>
+          </div>
+        </div>
+        <div class="content">
+          {{word.example}}
+        </div>
+      </div>
+      
+      <div class="modal" #modalDelete>
+        <div class="modal-background" (click)="modalDelete.classList.toggle('is-active')"></div>
+        <div class="modal-content">
+          <div class="notification is-danger title is-4">
+            Вы действительно хотите удалить запись <i>{{word.english}}</i>?
+                    <p class="control dontAsk-wrapper">
+                      <label class="checkbox">
+              <input type="checkbox" [(ngModel)]="dontAsk" name="dontAsk">
+              <p class="title is-5">Не спрашивать больше</p>
+            </label>
+                    </p>
+            <div class="block" style="padding-top: 10px;">
+              <a class="button is-danger is-inverted" (click)="onDelete(word); modalDelete.classList.toggle('is-active')">Удалить</a>
+            </div>
+          </div>
+        </div>
+        <button class="modal-close" (click)="modalDelete.classList.toggle('is-active')"></button>
+      </div>
+    </masonry-brick>
+  </masonry>
+</div>

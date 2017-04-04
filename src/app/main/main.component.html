@@ -1,0 +1,13 @@
+
+  <app-user-tag *ngIf="true" [user]="user"></app-user-tag>
+  <div class="menu-wrapper">
+    <div class="menu-item" *ngFor="let section of sections"><a class="button is-link" [ngClass]="{'active': section.active}"
+     (click)="onTabClick(section)">{{section.title}}</a></div>
+  </div>
+
+
+<app-add *ngIf="sections[0].active" (addWord)="addWord($event)"></app-add>
+<app-repeat *ngIf="sections[1].active" [words]="words" (deleteWord)="deleteWord($event)"></app-repeat>
+
+<!--
+<app-user-tag *ngIf="true" [user]="user"></app-user-tag>-->
