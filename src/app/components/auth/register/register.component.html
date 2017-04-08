@@ -1,0 +1,10 @@
+<div class="register-wrapper animated bounceInDown">
+  <form>
+    <input class="input" type="name" placeholder="Имя пользователя" [(ngModel)]="username" name="username" required autocomplete="off">
+    <input class="input" type="email" placeholder="Электронная почта" [(ngModel)]="email" name="email" required autocomplete="off">
+    <input class="input" type="password" placeholder="Пароль" [(ngModel)]="password" name="password" required autocomplete="off">
+    <div class="block">
+      <button class="button is-primary button-block" type="submit" (click)="onRegisterSubmit()">Зарегистрироваться</button>
+    </div>
+  </form>
+</div>

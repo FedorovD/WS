@@ -7,10 +7,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 import { AppComponent } from './app.component';
-import { MainComponent } from './main/main.component';
-import { AddComponent } from './main/add/add.component';
-import { RepeatComponent } from './main/repeat/repeat.component';
-import { LoginComponent } from './login/login.component';
+import { MainComponent } from './components/main/main.component';
+import { AddComponent } from './components/main/add/add.component';
+import { RepeatComponent } from './components/main/repeat/repeat.component';
+import { LoginComponent } from './components/auth/login/login.component';
 
 import { MasonryModule } from 'angular2-masonry';
 import { FlashMessagesModule } from 'angular2-flash-messages';
@@ -18,14 +18,17 @@ import { InstantSearchPipe } from './_pipes/instant-search.pipe';
 
 import { AppService } from './_services/app.service';
 import { AuthService } from './_services/auth.service';
+import { ValidateService } from './_services/validate.service';
 
 import { AuthGuard } from './_guards/auth.guard';
-import { UserTagComponent } from './main/user-tag/user-tag.component';
+import { UserTagComponent } from './components/main/user-tag/user-tag.component';
+import { AuthComponent } from './components/auth/auth.component';
+import { RegisterComponent } from './components/auth/register/register.component';
 
 
 const appRoutes: Routes = [
     { path: '', component: MainComponent, canActivate: [AuthGuard]},
-    { path: 'login', component: LoginComponent},
+    { path: 'auth', component: AuthComponent},
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' },
@@ -42,7 +45,9 @@ const appRoutes: Routes = [
     RepeatComponent,
     LoginComponent,
     InstantSearchPipe,
-    UserTagComponent
+    UserTagComponent,
+    AuthComponent,
+    RegisterComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -54,6 +59,7 @@ const appRoutes: Routes = [
   ],
   providers: [AppService,
               AuthService,
+              ValidateService,
               AuthGuard],
   bootstrap: [AppComponent]
 })

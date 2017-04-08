@@ -1,0 +1,12 @@
+<div class="auth-wrapper">
+
+    <div class="menu-item" *ngFor="let section of sections">
+      <a class="" [ngClass]="{'active': section.active}" (click)="onTabClick(section)">{{section.title}}</a>
+    </div>
+
+    <app-login *ngIf="sections[0].active" (login)="loginSubmit($event)"></app-login>
+
+    <app-register *ngIf="sections[1].active" (register)="registerSubmit($event)"></app-register>
+
+
+</div>

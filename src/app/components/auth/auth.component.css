@@ -1,0 +1,22 @@
+.auth-wrapper {
+    max-width: 320px;
+    margin: 100px auto;
+
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    font-size: 30px;
+}
+
+
+a {
+    font-size: 30px;
+    font-weight: 200;
+    color: white;
+
+}
+
+a.active {
+    border-bottom: 1px solid white;
+}

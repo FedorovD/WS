@@ -1,0 +1,31 @@
+input::-moz-placeholder {
+  font-weight: 100;
+  color: white;
+}
+
+input::-webkit-input-placeholder {
+  font-weight: 100;
+  color: white;
+}
+
+.login-wrapper {
+  padding: 40px 5px;
+}
+
+input.input {
+  background: inherit;
+  border: none;
+  border-radius: 0px;
+  box-shadow: none;
+  border-bottom: 1px solid white;
+  color: white;
+
+  text-align: center;
+  font-size: 18px;
+}
+
+
+
+button.button-block {
+    margin-top: 10px;
+}

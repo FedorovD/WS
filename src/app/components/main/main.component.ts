@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AppService } from '../_services/app.service';
+import { AppService } from '../../_services/app.service';
 
 @Component({
   selector: 'app-main',
@@ -8,9 +8,6 @@ import { AppService } from '../_services/app.service';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
-
-
- 
 
   words: any[];
   user: any;

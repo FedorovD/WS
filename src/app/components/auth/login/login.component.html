@@ -1,0 +1,9 @@
+<div class="login-wrapper animated bounceInDown">
+  <form>
+    <input class="input" type="name" placeholder="Электронная почта (логин)" [(ngModel)]="username" name="username" required autocomplete="off">
+    <input class="input" type="password" placeholder="Пароль" [(ngModel)]="password" name="password" required autocomplete="off">
+    <div class="block">
+      <button class="button is-primary button-block" type="submit" (click)="onLoginSubmit()">Войти</button>
+    </div>
+  </form>
+</div>

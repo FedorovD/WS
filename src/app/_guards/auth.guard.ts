@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
             return true;
         } else {
             this.flashMessage.show('Please, sign in', {cssClass: 'notification is-danger', timeout: 3000});
-            this.router.navigate(['/login']);
+            this.router.navigate(['/auth']);
             return false;
         }
     }
