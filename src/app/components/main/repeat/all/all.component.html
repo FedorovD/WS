@@ -1,11 +1,5 @@
 <div class="container">
-
-  <div class="select-wrapper">
-    <div class="menu-item" *ngFor="let section of sections"><a class="button is-link" [ngClass]="{'active': section.active}"
-     (click)="onTabClick(section)">{{section.title}}</a></div>
-  </div>
-
-  <!--<div class="field search">
+    <div class="field search">
     <div class="control is-expanded has-icon has-icon-left">
       <input class="input is-large" type="text" placeholder="" [(ngModel)]="search" name="search">
       <span class="icon is-medium">
@@ -48,9 +42,5 @@
         <button class="modal-close" (click)="modalDelete.classList.toggle('is-active')"></button>
       </div>
     </masonry-brick>
-  </masonry>-->
-
-  <app-all *ngIf="sections[0].active" [words]="words" (deleteWord)="deleteWord($event)"></app-all>
-  <app-first-case *ngIf="sections[1].active"></app-first-case>
-  <app-second-case *ngIf="sections[2].active"></app-second-case>
+  </masonry>
 </div>

@@ -24,6 +24,9 @@ import { AuthGuard } from './_guards/auth.guard';
 import { UserTagComponent } from './components/main/user-tag/user-tag.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { RegisterComponent } from './components/auth/register/register.component';
+import { AllComponent } from './components/main/repeat/all/all.component';
+import { FirstCaseComponent } from './components/main/repeat/first-case/first-case.component';
+import { SecondCaseComponent } from './components/main/repeat/second-case/second-case.component';
 
 
 const appRoutes: Routes = [
@@ -47,7 +50,10 @@ const appRoutes: Routes = [
     InstantSearchPipe,
     UserTagComponent,
     AuthComponent,
-    RegisterComponent
+    RegisterComponent,
+    AllComponent,
+    FirstCaseComponent,
+    SecondCaseComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

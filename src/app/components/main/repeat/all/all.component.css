@@ -42,27 +42,9 @@ button.delete {
 }
 
 .select-wrapper {
-    max-width: 600px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin: 0 auto;
-    padding-top: 20px;
+    padding-top: 100px;
     flex-wrap: wrap;
-}
-.menu-wrapper .menu-item {
-    text-align: center;
-}
-
-.menu-item a {
-    text-decoration: none;
-}
-.menu-item a.active {
-    text-decoration: underline;
-}
-.menu-item a:hover{
-    background: inherit;
-}
-
-.button:active{
-  box-shadow: none;
 }

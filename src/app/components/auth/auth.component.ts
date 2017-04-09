@@ -81,7 +81,13 @@ export class AuthComponent implements OnInit {
 
 
 
-     console.log(user);
+     this.authService.registerUser(user).subscribe(data => {
+        if (data.success) {
+        this.flashMessage.show('Registered success', {cssClass: 'notification is-success', timeout: 3000});
+        }else {
+        this.flashMessage.show('Something went wrong', {cssClass: 'notification is-danger', timeout: 3000});
+      }
+    });
   }
 
 }

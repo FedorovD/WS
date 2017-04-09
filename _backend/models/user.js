@@ -16,6 +16,10 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     }
+    // ,
+    // own_collections: {
+    //     type: String
+    // }
 });
 
 const usersSchema = mongoose.Schema({

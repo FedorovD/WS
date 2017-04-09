@@ -1,4 +1,4 @@
-.exit a {
+/*.exit a {
   color: white;
 }
 
@@ -19,7 +19,15 @@
     font-size: 18px;
 }
 
-.userName {
-    font-size: 24px;
+.username {
+    font-size: 22px;
+    font-weight: 300;
     padding: 0px 10px;
+}*/
+
+.usertag-wrapper {
+    padding: 5px 10px;
+}
+.user {
+
 }

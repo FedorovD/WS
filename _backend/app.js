@@ -7,6 +7,7 @@ const passport = require('passport');
 const config = require('./config/database');
 
 const Word = require('./models/word');
+const Collection = require('./models/collection');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.database);
@@ -24,6 +25,7 @@ const app = express();
 
 
 const users = require('./routes/users');
+const collections = require('./routes/collections');
 
 
 const port = 4201;
@@ -38,6 +40,7 @@ app.use(passport.session());
 require('./config/passport')(passport);
  
 app.use('/users', users);
+app.use('/collections', collections);
 
  
 
@@ -98,6 +101,9 @@ app.delete('/delete/*', (req, res, next) => {
         }
     });
 });
+
+
+
 
 
 app.listen(port, () => {

@@ -1,11 +1,20 @@
 <div class="usertag-wrapper">
 
-  <span class="tag is-primary is-large">
-      <a  class="fa fa-bell-o notifications"></a>
-    <i class="userName">{{user}}</i>
+  <!--<span class="tag is-primary is-large">
+      <a  class="fa fa-bell-o notifications" *ngIf="false"></a>
+    <i class="username">{{user}}</i>
 
     <span class="icon exit">
   <a  class="fa fa-sign-out" (click)="onLogoutClick()"></a>
 </span>
+  </span>-->
+
+  <a class="user">{{user}}</a>
+  <span class="icon exit">
+  <a  class="fa fa-sign-out" (click)="onLogoutClick()"></a>
   </span>
+
 </div>
+
+
+

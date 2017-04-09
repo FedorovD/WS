@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AppService } from '../../_services/app.service';
+import { AuthService } from '../../_services/auth.service';
 
 @Component({
   selector: 'app-main',
@@ -24,10 +25,10 @@ export class MainComponent implements OnInit {
     }
   ];
 
-  constructor(private appService: AppService) {
+  constructor(private appService: AppService, private authService: AuthService) {
     this.getAllWords();
 
-    this.user = 'turevs';
+    this.authService.getProfile().subscribe(res => this.user = res.user.username);
   }
    ngOnInit() {
   }
@@ -38,27 +39,17 @@ export class MainComponent implements OnInit {
       this.sections.find((section) => section == sectionToogle).active = true;
   }
 
-  addWord(word) {
+
+getAllWords() {
+    this.appService.getAll().subscribe(words => this.words = words);
+  }
+
+ addWord(word) {
     this.appService.addWord(word).subscribe(res => {
       if (res.success === true) {
          this.getAllWords();
         }});
   }
-
-  getAllWords() {
-    this.appService.getAll().subscribe(words => this.words = words);
-  }
-
-   deleteWord(word) {
-
-    if (this.words.indexOf(word) === -1) console.log('ERROR  app.component | func: deleteWord()');
-    else {
-    this.appService.deleteWord(word).subscribe(res => {
-      if (res.success === true) {
-        this.getAllWords();
-      }
-    });
-    }
-  }
+   
 
 }
