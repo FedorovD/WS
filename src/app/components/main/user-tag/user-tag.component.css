@@ -26,8 +26,13 @@
 }*/
 
 .usertag-wrapper {
-    padding: 5px 10px;
+  padding: 5px 10px;
 }
-.user {
 
+.user:hover {
+  color: white;
+}
+
+.icon {
+  color: #00D1B2;
 }

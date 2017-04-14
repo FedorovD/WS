@@ -66,7 +66,6 @@ export class AuthComponent implements OnInit {
 
 
   registerSubmit(user: any) {
-      
       // Validate Fields
     if (!this.validateService.validateRegister(user)) {
       this.flashMessage.show('Please fill in all fields', {cssClass: 'notification is-danger animated bounceInDown', timeout: 3000});

@@ -33,7 +33,6 @@ router.post('/add', (req, res, next) => {
 
 
 router.get('/getAll', (req, res) => {
-    console.log(req);
     Collection.getAllCollections((collections, err) => {
         if(err) console.log(err);
         else res.send(collections);

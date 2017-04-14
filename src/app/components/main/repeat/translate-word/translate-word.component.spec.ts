@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FirstCaseComponent } from './first-case.component';
+import { TranslateWordComponent } from './translate-word.component';
 
-describe('FirstCaseComponent', () => {
-  let component: FirstCaseComponent;
-  let fixture: ComponentFixture<FirstCaseComponent>;
+describe('TranslateWordComponent', () => {
+  let component: TranslateWordComponent;
+  let fixture: ComponentFixture<TranslateWordComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FirstCaseComponent ]
+      declarations: [ TranslateWordComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FirstCaseComponent);
+    fixture = TestBed.createComponent(TranslateWordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

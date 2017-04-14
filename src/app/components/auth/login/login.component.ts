@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
 
     this.login.emit(user);
 
-   
   }
 
 }

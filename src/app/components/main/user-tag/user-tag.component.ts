@@ -10,8 +10,7 @@ import { Router } from '@angular/router';
 })
 export class UserTagComponent implements OnInit {
   @Input() user: any;
-  constructor(private authService: AuthService, private flashMessage: FlashMessagesService, private router: Router) { 
-    
+  constructor(private authService: AuthService, private flashMessage: FlashMessagesService, private router: Router) {
   }
 
   ngOnInit() {

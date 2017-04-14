@@ -57,23 +57,23 @@ export class AuthService {
     return tokenNotExpired();
   }
 
-  getAdminRights() {
-    let headers = new Headers();
-    let rights;
-    this.loadToken();
-    headers.append('Authorization', this.authToken);
-    headers.append('Content-Type', 'application/json');
-    
-    return this.http.get(this.API + 'users/profile', {headers: headers})
-                                                                        .map(res => res.json().user.rights)
-                                                                        .map((rights)=>{
-                                                                          if(rights == 0) return true;
-                                                                          else{
-                                                                            this.flashMessage.show('You are not allowed', {cssClass: 'notification is-danger', timeout: 3000});
-                                                                            return false;  
-                                                                        } 
-                                                                        });
-  }
+  // getAdminRights() {
+  //   let headers = new Headers();
+  //   let rights;
+  //   this.loadToken();
+  //   headers.append('Authorization', this.authToken);
+  //   headers.append('Content-Type', 'application/json');
+
+  //   return this.http.get(this.API + 'users/profile', {headers: headers})
+  //                                                                       .map(res => res.json().user.rights)
+  //                                                                       .map((rights)=>{
+  //                                                                         if(rights == 0) return true;
+  //                                                                         else{
+  //                                                                           this.flashMessage.show('You are not allowed', {cssClass: 'notification is-danger', timeout: 3000});
+  //                                                                           return false;  
+  //                                                                       } 
+  //                                                                       });
+  // }
 
   logout() {
     this.authToken = null;

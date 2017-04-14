@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SecondCaseComponent } from './second-case.component';
+import { AudioWordComponent } from './audio-word.component';
 
-describe('SecondCaseComponent', () => {
-  let component: SecondCaseComponent;
-  let fixture: ComponentFixture<SecondCaseComponent>;
+describe('AudioWordComponent', () => {
+  let component: AudioWordComponent;
+  let fixture: ComponentFixture<AudioWordComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SecondCaseComponent ]
+      declarations: [ AudioWordComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SecondCaseComponent);
+    fixture = TestBed.createComponent(AudioWordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

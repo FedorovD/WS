@@ -25,8 +25,10 @@ import { UserTagComponent } from './components/main/user-tag/user-tag.component'
 import { AuthComponent } from './components/auth/auth.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { AllComponent } from './components/main/repeat/all/all.component';
-import { FirstCaseComponent } from './components/main/repeat/first-case/first-case.component';
-import { SecondCaseComponent } from './components/main/repeat/second-case/second-case.component';
+import { WordTranslateComponent } from './components/main/repeat/word-translate/word-translate.component';
+import { TranslateWordComponent } from './components/main/repeat/translate-word/translate-word.component';
+import { AudioWordComponent } from './components/main/repeat/audio-word/audio-word.component';
+
 
 
 const appRoutes: Routes = [
@@ -52,16 +54,17 @@ const appRoutes: Routes = [
     AuthComponent,
     RegisterComponent,
     AllComponent,
-    FirstCaseComponent,
-    SecondCaseComponent
+    WordTranslateComponent,
+    TranslateWordComponent,
+    AudioWordComponent,
   ],
   imports: [
-    RouterModule.forRoot(appRoutes),
     BrowserModule,
     FormsModule,
     HttpModule,
     MasonryModule,
-    FlashMessagesModule
+    FlashMessagesModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [AppService,
               AuthService,

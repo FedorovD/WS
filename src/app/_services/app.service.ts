@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import { Http, Headers } from '@angular/http';
+import {FlashMessagesService} from 'angular2-flash-messages/module';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -7,7 +8,7 @@ export class AppService {
 
   API: String = 'http://localhost:4201/';
 
-  constructor(private http: Http) {}
+  constructor(private http: Http, private flashMessage: FlashMessagesService) {}
 
 
   addWord(word) {
@@ -38,6 +39,10 @@ export class AppService {
         headers: headers
       })
       .map(res => res.json());
+  }
+
+  showFlashMessage(title: string, classes: string, timeout: number) {
+    this.flashMessage.show(title, {cssClass: classes, timeout: timeout});
   }
 
 }
