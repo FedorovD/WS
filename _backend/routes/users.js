@@ -97,6 +97,20 @@ router.get('/getAllUsers', passport.authenticate('jwt', {
 });
 
 
+router.post('/subscribeToCollection', passport.authenticate('jwt', {
+    session: false
+}), (req, res, next) => {
+    let query = {
+        "collection_id": req.body.id,
+        "user": req.user
+    };
+    User.subscribeToCollection(query, (err, user) => {
+        if(err) return res.json({success: false,msg: `${err}`});
+        return res.json({success: true, msg: `${query.collection_id} added`});
 
+});
+
+    
+});
 
 module.exports = router;

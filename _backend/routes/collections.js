@@ -5,17 +5,16 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 
 const Collection = require('../models/collection');
-
+const Word = require('../models/word');
 
 
 router.post('/add', (req, res, next) => {
-    console.log(req);
     let newCollection = new Collection({
         name: req.body.name,
-        description: req.body.description | '',
+        description: req.body.description || '',
     });
 
-    Collection.addCollection(newCollection, (err, user) => {
+    Collection.addCollection(newCollection, (err, collection) => {
         if (err) {
             res.json({
                 success: false,
@@ -38,6 +37,32 @@ router.get('/getAll', (req, res) => {
         else res.send(collections);
     });
 });
+
+
+router.post('/addWordInCollection', (req, res, next) => {
+    let collection_id = req.body.id;
+    let newWord = new Word({
+        english: req.body.word.english,
+        russian: req.body.word.russian,
+        example: req.body.word.example || ''
+    });
+
+    Collection.addWordInCollection(collection_id, newWord, (err, collection) => {
+        if (err) {
+            res.json({
+                success: false,
+                msg: 'Failed to add word in collection'
+            });
+        } 
+        else {
+            res.json({
+                success: true,
+                msg: 'Word added in collection'
+            });
+        }
+    });
+});
+
 
 
 module.exports = router;

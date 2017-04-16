@@ -24,7 +24,9 @@ const collectionsSchema = mongoose.Schema({
         type: [collectionSchema]
     }
 });
-
+module.exports.getCollectionById = function (id, callback) {
+    Collection.findById(id, callback);
+};
 
 module.exports.addCollection = function (name, callback) {
     name.save(callback);
@@ -37,9 +39,10 @@ module.exports.getAllCollections = function (callback) {
   });
 };
 
-module.exports.addWordInCollection = function (word, id, callback) {
+module.exports.addWordInCollection = function (id,word, callback) {
     Collection.findById(id, function(err, collection) {
+        collection.words.push(word);
         if(err) console.log(err);
-        else callback(collection);
+        else collection.save(callback);
   });
 };
