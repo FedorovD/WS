@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const config = require('../config/database');
 const Collection = require('../models/collection');
+const Word = require('../models/word');
 // User schema
 const userSchema = mongoose.Schema({
     email: {
@@ -22,10 +23,6 @@ const userSchema = mongoose.Schema({
     own_collections: {
         type: [Collection.Schema]
     }
-    // ,
-    // own_collections: {
-    //     type: String
-    // }
 });
 
 const usersSchema = mongoose.Schema({
@@ -96,22 +93,50 @@ module.exports.subscribeToCollection = function (data, callback) {
             user.added_collections.push(collection_id);
             user.save(callback);
         }else callback(`${collection_id} added already`, "");
-        //return res.json({success: false,msg: "this collections added already"});
     });
 
         }
-        
     });
-
-//     User.findOne({"added_collections": id}, function(err, user) {
-//         if(err) return console.log(err);
-//         console.log(user);
-//         if(user == null) {
-//             // console.log(user);
-//             // // user.added_collections.push(id);
-//             // console.log(user);
-//         }else {
-//             return console.log("this collections added already");
-//         }
-//   });
 };
+
+
+module.exports.createOwnCollection = function (data, callback) {
+    let newCollection = data.newCollection;
+    let user = data.user;
+    let allCollectionsName=[];
+    user.own_collections.forEach(item => allCollectionsName.push(item.name));
+     User.findOne(user, (err, res)=>{
+        if(err) return console.log(err);
+        if(allCollectionsName.indexOf(newCollection.name) > -1) return callback(`${newCollection.name} exists already`, "");
+        else {
+            user.own_collections.push(newCollection);
+            user.save(callback);
+        }
+    });
+};
+
+module.exports.putWordInOwnCollection = function (data, callback) {
+    let newWord = new Word(data.newWord);
+    let _user = data.user;
+    let collection_id = data.collection._id;
+
+    // console.log(newWord);
+    // console.log(collection);
+    User.findById(_user._id, (err,user)=>{
+        if(err) return console.log(err);
+        // console.log(newWord);
+        for (let i = 0; i < user.own_collections.length; i++){
+             if(user.own_collections[i]._id == collection_id){
+                  console.log(user);
+                  console.log(_user);
+                  console.log(user === _user);
+                user.own_collections[i].words.push(newWord);
+               
+                // console.log('user', _user.own_collections[i].words);
+                user.save(callback);
+             }
+             
+        }
+    });
+};
+

@@ -4,7 +4,9 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 
+const Word = require('../models/word');
 const User = require('../models/user');
+const Collection = require('../models/collection');
 
 
 // Register
@@ -108,9 +110,44 @@ router.post('/subscribeToCollection', passport.authenticate('jwt', {
         if(err) return res.json({success: false,msg: `${err}`});
         return res.json({success: true, msg: `${query.collection_id} added`});
 
+});   
 });
 
-    
+
+router.post('/createOwnCollection', passport.authenticate('jwt', {
+    session: false
+}), (req, res, next) => {
+    let query = {
+        newCollection: new Collection({
+        name: req.body.name,
+        description: req.body.description || '',
+        words: []
+    }),
+    user: req.user
+    };
+    User.createOwnCollection(query, (err, data)=>{
+        if(err) return res.json({success: false,msg: `${err}`});
+        else return res.json({success: true, msg: `${query.newCollection} created`});
+    });
+});
+
+
+router.post('/addWordInOwnCollection', passport.authenticate('jwt', {
+    session: false
+}), (req, res, next) => {
+    let query = {
+        newWord: new Word({
+            english: req.body.english,
+            russian: req.body.russian,
+            example: req.body.example || ''
+    }),
+    user: req.user,
+    collection: req.body.collection
+    };
+    User.putWordInOwnCollection(query, (err, data)=>{
+        if(err) return res.json({success: false,msg: `${err}`});
+        else return res.json({success: true, msg: `${query.newWord} added`});
+    });
 });
 
 module.exports = router;
