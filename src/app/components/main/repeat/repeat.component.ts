@@ -8,6 +8,7 @@ import { AppService } from '../../../_services/app.service';
 })
 export class RepeatComponent implements OnInit {
   @Input() words: any[];
+  @Input() addedCollections: any[];
 
 
   sections  = {
@@ -49,10 +50,10 @@ export class RepeatComponent implements OnInit {
     }]
   };
   constructor(private appService: AppService) {
+
   }
 
   ngOnInit() {
-
   }
 
    onTabClick(sectionToogle) {

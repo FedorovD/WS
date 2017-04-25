@@ -7,7 +7,7 @@ import 'rxjs/add/operator/map';
 export class AppService {
 
   API: String = 'http://localhost:4201/';
-
+  authToken: any;
   constructor(private http: Http, private flashMessage: FlashMessagesService) {}
 
 
@@ -30,6 +30,18 @@ export class AppService {
       .map(res => res.json());
   }
 
+  getAddedCollections() {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.get(this.API + 'users/getAddedCollections', {
+        headers: headers
+      })
+      .map(res => res.json());
+  }
+
 
   deleteWord(word) {
     let headers = new Headers();
@@ -43,6 +55,13 @@ export class AppService {
 
   showFlashMessage(title: string, classes: string, timeout: number) {
     this.flashMessage.show(title, {cssClass: classes, timeout: timeout});
+  }
+
+
+
+  loadToken() {
+    const token = localStorage.getItem('id_token');
+    this.authToken = token;
   }
 
 }

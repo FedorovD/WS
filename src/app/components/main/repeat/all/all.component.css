@@ -1,50 +1,48 @@
 .card {
-    width: 200px;
-    margin: 10px;
-    -webkit-box-shadow: 3px 3px 15px 2px rgba(0,0,0,0.75);
--moz-box-shadow: 3px 3px 15px 2px rgba(0,0,0,0.75);
-box-shadow: 3px 3px 15px 2px rgba(0,0,0,0.75);
-
-flex-basis: 200px;
+  min-width: 200px;
+  max-width: 280px;
+  margin: 10px;
+  -webkit-box-shadow: 3px 3px 15px 2px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 3px 3px 15px 2px rgba(0, 0, 0, 0.75);
+  box-shadow: 3px 3px 15px 2px rgba(0, 0, 0, 0.75);
+  flex-basis: 200px;
 }
 
 .target-word {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .wrapper {
-    /*display: flex;
+  /*display: flex;
     justify-content: flex-start;
     flex-wrap: nowrap;*/
-    width: 800px;
-    margin: 0 auto;
+  margin: 0 auto;
 }
-
 
 .search {
-    max-width: 800px;
-    margin: 20px auto;
-    margin-bottom: 40px;
+  max-width: 800px;
+  margin: 20px auto;
+  margin-bottom: 40px;
 }
 
-
 button.delete {
-    float: right;
-    margin: 5px;
+  position: absolute;
+  right: 4px;
+  top: 4px;
 }
 
 .content {
-    word-wrap: break-word;
+  word-wrap: break-word;
 }
 
-.dontAsk-wrapper{
-    padding: 5px;
+.dontAsk-wrapper {
+  padding: 5px;
 }
 
 .select-wrapper {
-    display: flex;
-    justify-content: flex-start;
-    margin: 0 auto;
-    padding-top: 100px;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: flex-start;
+  margin: 0 auto;
+  padding-top: 100px;
+  flex-wrap: wrap;
 }

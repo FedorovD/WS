@@ -115,6 +115,7 @@ button.delete {
     bottom: 40px;
     right: 60px;
     cursor: pointer;
+    z-index: 100;
 }
 .btn-back:hover {
     -webkit-box-shadow: 8px 5px 5px -1px rgba(0,0,0,0.3);

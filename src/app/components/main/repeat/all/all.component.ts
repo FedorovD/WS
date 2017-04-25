@@ -7,6 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class AllComponent implements OnInit {
   @Input() words: any[];
+  @Input() addedCollections: any[];
   @Output() deleteWord: EventEmitter<any> = new EventEmitter();
 
   search: String;

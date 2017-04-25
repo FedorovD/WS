@@ -12,6 +12,7 @@ export class MainComponent implements OnInit {
 
   words: any[];
   user: any;
+  addedCollections: any[];
   sections  = [
     {
       section: "add",
@@ -29,6 +30,8 @@ export class MainComponent implements OnInit {
     this.getAllWords();
 
     this.authService.getProfile().subscribe(res => this.user = res.user.username);
+
+    this.appService.getAddedCollections().subscribe(_collections => this.addedCollections = _collections.collections);
   }
    ngOnInit() {
   }
@@ -44,12 +47,14 @@ getAllWords() {
     this.appService.getAll().subscribe(words => this.words = words);
   }
 
+
+
  addWord(word) {
     this.appService.addWord(word).subscribe(res => {
       if (res.success === true) {
          this.getAllWords();
         }});
   }
-   
+
 
 }

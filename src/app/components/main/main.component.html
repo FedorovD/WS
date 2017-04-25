@@ -8,7 +8,7 @@
 
 
 <app-add *ngIf="sections[0].active" (addWord)="addWord($event)"></app-add>
-<app-repeat *ngIf="sections[1].active" [words]="words" (deleteWord)="deleteWord($event)"></app-repeat>
+<app-repeat *ngIf="sections[1].active" [words]="words" (deleteWord)="deleteWord($event)" [addedCollections]="addedCollections"></app-repeat>
     
 
 

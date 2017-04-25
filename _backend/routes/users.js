@@ -99,6 +99,19 @@ router.get('/getAllUsers', passport.authenticate('jwt', {
 });
 
 
+
+
+router.get('/getAddedCollections', passport.authenticate('jwt', {
+    session: false
+}), (req, res, next) => {
+    User.getAddedCollections(req.user, (err, collections)=>{
+        if(err) return res.json({success: false,msg: `${err}`});
+        return res.json({success: true, collections: collections});
+    });
+
+});
+
+
 router.post('/subscribeToCollection', passport.authenticate('jwt', {
     session: false
 }), (req, res, next) => {

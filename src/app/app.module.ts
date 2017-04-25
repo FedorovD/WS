@@ -28,6 +28,7 @@ import { AllComponent } from './components/main/repeat/all/all.component';
 import { WordTranslateComponent } from './components/main/repeat/word-translate/word-translate.component';
 import { TranslateWordComponent } from './components/main/repeat/translate-word/translate-word.component';
 import { AudioWordComponent } from './components/main/repeat/audio-word/audio-word.component';
+import { HideCollectionPipe } from './_pipes/hide-collection.pipe';
 
 
 
@@ -57,6 +58,7 @@ const appRoutes: Routes = [
     WordTranslateComponent,
     TranslateWordComponent,
     AudioWordComponent,
+    HideCollectionPipe,
   ],
   imports: [
     BrowserModule,
