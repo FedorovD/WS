@@ -48,3 +48,138 @@ app-user-tag {
   -webkit-user-select: none;
   user-select: none;
 }
+
+
+
+.card {
+    width: 200px;
+    margin: 10px;
+    -webkit-box-shadow: 3px 3px 15px 2px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 3px 15px 2px rgba(0,0,0,0.75);
+box-shadow: 3px 3px 15px 2px rgba(0,0,0,0.75);
+
+flex-basis: 200px;
+}
+
+.target-word {
+    font-weight: 700;
+}
+
+.wrapper {
+    /*display: flex;
+    justify-content: flex-start;
+    flex-wrap: nowrap;*/
+    width: 800px;
+    margin: 0 auto;
+}
+
+
+.search {
+    max-width: 800px;
+    margin: 20px auto;
+    margin-bottom: 40px;
+}
+
+
+button.delete {
+    float: right;
+    margin: 5px;
+}
+
+.content {
+    word-wrap: break-word;
+}
+
+.dontAsk-wrapper{
+    padding: 5px;
+}
+
+.training-wrapper {
+    max-width: 600px;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    margin: 0 auto;
+    padding-top: 20px;
+    flex-wrap: wrap;
+}
+.training-wrapper .training-item {
+    width: 280px;
+    padding: 10px;
+    -webkit-box-shadow: 11px 7px 10px -1px rgba(0,0,0,0.3);
+    -moz-box-shadow: 11px 7px 10px -1px rgba(0,0,0,0.3);
+    box-shadow: 11px 7px 10px -1px rgba(0,0,0,0.3);
+}
+
+.training-wrapper .training-item:hover {
+    box-shadow: 0 2px 4px rgba(0,0,0,.15);
+}
+
+.training-item .block {
+    margin-top: 10px;
+}
+.training-item {
+    background: white;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.training-item .item_title{
+    font-size: 20px;
+    font-weight: 700px;
+    text-align: center;
+
+    padding-top: 20px;
+}
+
+.training-item .item_desc{
+    font-size: 14px;
+    font-weight: 100px;
+    text-align: center;
+
+    padding-top: 10px;
+}
+
+
+.training-item .item_image{
+    padding-top: 20px;
+    text-align: center;
+}
+
+
+
+.item_block {
+    /*flex-grow: 1;*/
+    flex-basis: 100%;
+}
+
+.btn-back {
+    width: 64px;
+    height: 64px;
+    border-radius: 32px;
+    background: white;
+    -webkit-box-shadow: 11px 7px 10px -1px rgba(0,0,0,0.3);
+    -moz-box-shadow: 11px 7px 10px -1px rgba(0,0,0,0.3);
+    box-shadow: 11px 7px 10px -1px rgba(0,0,0,0.3);
+    
+    position: fixed;
+    bottom: 40px;
+    right: 60px;
+    cursor: pointer;
+    z-index: 1.1;
+}
+.btn-back:hover {
+    -webkit-box-shadow: 8px 5px 5px -1px rgba(0,0,0,0.3);
+    -moz-box-shadow: 8px 5px 5px -1px rgba(0,0,0,0.3);
+    box-shadow: 8px 5px 5px -1px rgba(0,0,0,0.3);
+
+}
+
+
+@media screen and (max-width: 640px) {
+    .training-item {
+        flex-basis: 100%;
+    }
+}

@@ -1,16 +1,39 @@
+<app-user-tag *ngIf="true" [user]="user"></app-user-tag>
+
+<span class="icon btn-back" *ngIf="!sections.menu.active" (click)="onBack()">
+  <i class="fa fa-chevron-left"></i>
+</span>
 
 
-  <app-user-tag *ngIf="true" [user]="user"></app-user-tag>
-  <div class="menu-wrapper">
-    <div class="menu-item" *ngFor="let section of sections"><a class="button is-link" [ngClass]="{'active': section.active}"
-     (click)="onTabClick(section)">{{section.title}}</a></div>
+<div class="container animated fadeInLeft">
+
+
+
+  <div class="training-wrapper" *ngIf="sections.menu.active">
+    <div class="training-item" *ngFor="let section of sections.trainings" [ngClass]="{'item_block': section.block}">
+       <div class="item_image">
+          <img src={{section.img}} alt="whale" width="64px" height="48px">
+      </div>
+      <p class="item_title">{{section.title}}</p>
+      <p class="item_desc">
+        {{section.description}}
+      </p>
+
+      <div class="block">
+      <a class="button is-primary button-block" (click)="onTabClick(section)">Начать</a>
+    </div>
+     
+     
+
+  
+      
+      </div>
   </div>
 
+<app-my *ngIf="sections.trainings[0].active" [words]="words" (deleteWord)="deleteWord($event)" [addedCollections]="addedCollections"></app-my>
+<app-word-translate *ngIf="sections.trainings[1].active"></app-word-translate>
+<app-translate-word *ngIf="sections.trainings[2].active"></app-translate-word>
+<app-audio-word *ngIf="sections.trainings[3].active"></app-audio-word>
 
-<app-add *ngIf="sections[0].active" (addWord)="addWord($event)"></app-add>
-<app-repeat *ngIf="sections[1].active" [words]="words" (deleteWord)="deleteWord($event)" [addedCollections]="addedCollections"></app-repeat>
-    
 
-
-<!--
-<app-user-tag *ngIf="true" [user]="user"></app-user-tag>-->
+</div>

@@ -1,0 +1,215 @@
+<div class="container">
+    <div class="field search">
+    <div class="control is-expanded has-icon has-icon-left">
+      <input class="input is-large" type="text" placeholder="" [(ngModel)]="search" name="search">
+      <span class="icon is-medium">
+          <i class="fa fa-search"></i>
+        </span>
+    </div>
+  </div>
+
+
+
+  <div class="controls-wrapper is-clearfix">
+    <div class="manage-wrapper">
+
+ <button class="button is-small is-primary" (click)="onAddNewCollectionModal();modalAddCollection.classList.toggle('is-active')">
+    <span class="icon">
+      <i class="fa fa-plus"></i>
+    </span>
+    <span>Добавить новую коллекцию</span>
+  </button>
+
+
+</div>
+
+<div class="displaying-wrapper">
+
+ <button class="button" *ngFor="let displayItem of displaying" [disabled]="displayItem.disable" (click)="onToggleDisplay(displayItem)">
+    <span class="icon">
+      <i class="fa {{displayItem.icon}}"></i>
+    </span>
+  </button>
+
+</div>
+
+</div>
+
+
+
+<article  *ngFor="let collection of addedCollections" class="message is-primary">
+  
+  <div class="s-wrapper" [hidden]="collection.words | hideCollection: search">
+    <div class="message-header">
+    <p>{{collection.name}}</p>
+
+    <div class="adddelete-wrapper">
+
+      <span class="icon is-small" (click)="onAddWordInCollection(collection)">
+  <i class="fa fa-plus"></i>
+</span>
+
+<span class="icon is-small" (click)="onDeleteCollection(collection)">
+  <i class="fa fa-minus"></i>
+</span>
+
+    </div>
+  </div>
+  <div class="message-body">
+    <h3 class="title is-3">{{collection.description}}</h3>
+
+
+  <table class="table is-narrow" *ngIf="displaying[1].disable">
+  <thead>
+    <tr>
+      <th><abbr title="Position">Pos</abbr></th>
+      <th>Eng</th>
+      <th>Rus</th>
+      <th>Exmpl</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let word of collection.words | instantSearch: search;let i=index ">
+      <th>{{i+1}}</th>
+      <th>{{word.english}}</th>
+      <td>{{word.russian}}</td>
+      <td>{{word.example}}</td>
+    </tr>
+
+  </tbody>
+</table>
+
+
+
+    <masonry class="wrapper" [ngClass]="'animated fadeInLeft'" [options]="{ transitionDuration: '0.2s', fitWidth: true }" *ngIf="displaying[0].disable">
+      <masonry-brick class="card" *ngFor="let word of collection.words | instantSearch: search" (mouseover)='word.hover = true' (mouseleave)="word.hover = false">
+      <button class="delete" *ngIf="word.hover" (click)="onDelete(word);modalDelete.classList.toggle('is-active')"></button>
+      <div class="card-content">
+        <div class="media">
+          <div class="media-content">
+            <p class="title is-3">{{word.english}}</p>
+            <p class="subtitle is-6">{{word.russian}}</p>
+          </div>
+        </div>
+        <div class="content">
+          {{word.example}}
+        </div>
+      </div>
+
+
+
+
+      <div class="modal" #modalDelete>
+        <div class="modal-background" (click)="modalDelete.classList.toggle('is-active')"></div>
+        <div class="modal-content">
+          <div class="notification is-danger title is-4">
+            Вы действительно хотите удалить запись <i>{{word.english}}</i>?
+                    <p class="control dontAsk-wrapper">
+                      <label class="checkbox">
+              <input type="checkbox" [(ngModel)]="dontAsk" name="dontAsk">
+              <p class="title is-5">Не спрашивать больше</p>
+            </label>
+                    </p>
+            <div class="block" style="padding-top: 10px;">
+              <a class="button is-danger is-inverted" (click)="onDelete(word); modalDelete.classList.toggle('is-active')">Удалить</a>
+            </div>
+          </div>
+        </div>
+        <button class="modal-close" (click)="modalDelete.classList.toggle('is-active')"></button>
+      </div>
+
+      </masonry-brick>
+    </masonry>
+
+  </div>
+  </div>
+</article>
+
+
+
+<div class="modal addCollection" #modalAddCollection>
+  <div class="modal-background" (click)="modalAddCollection.classList.toggle('is-active')"></div>
+  <div class="modal-card">
+    <section class="modal-card-body">
+      <div class="tabs is-centered">
+                <ul>
+                  <li *ngFor="let tab of addCollectionModalTab" [ngClass]="{'is-active': tab.active}" (click)="onAddCollectionTab(tab)"><a>{{tab.title}}</a></li>
+                </ul>
+              </div>
+        <div class="field" *ngIf="addCollectionModalTab[0].active"> 
+              
+              
+                 <div class="field is-horizontal">
+                    <div class="field-body">
+                      <div class="field is-grouped">
+                        <p class="control is-expanded">
+                          <input class="input" type="text" placeholder="Название" #name required>
+                        </p>
+                      </div>
+                      <div class="field">
+                        <p class="control is-expanded">
+                          <input class="input" type="text" placeholder="Описание" #descriptiom required>
+                        </p>
+                      </div>
+                    </div>
+          </div>
+
+                  <div class="field is-horizontal">
+                    <div class="field-body">
+                      <div class="field">
+                        <div class="control">
+                          <button class="button is-primary" (click)="onAddNewCollection(name.value, descriptiom.value)">
+                            Создать
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+        </div>
+
+           <div class="field" *ngIf="addCollectionModalTab[1].active"> 
+              <table class="table is-narrow">
+                    <thead>
+                      <tr>
+                        <th>№</th>
+                        <th>Название</th>
+                        <th>Описание</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                   <tbody>
+                    <tr *ngFor="let collection of allCollections;let i=index">
+                      <th>{{i+1}}</th>
+                      <th>{{collection.name}}</th>
+                      <th>{{collection.description}}</th>
+                      <th>
+                          <span class="icon is-small" style="cursor: pointer" [ngClass]="{'primary-color': collection.added}">
+                          <i class="fa fa-check"></i>
+                        </span>
+
+                      </th>
+                    </tr>
+                  </tbody>
+              </table>
+              
+
+        </div>
+      
+    </section>
+  </div>
+  <button class="modal-close" (click)="modalAddCollection.classList.toggle('is-active')"></button>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

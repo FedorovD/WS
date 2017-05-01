@@ -30,6 +30,14 @@ export class AppService {
       .map(res => res.json());
   }
 
+    getAllCollections() {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(this.API + 'collections/getAll', {
+        headers: headers
+      })
+      .map(res => res.json());
+  }
   getAddedCollections() {
     let headers = new Headers();
     this.loadToken();
@@ -48,6 +56,18 @@ export class AppService {
     headers.append('Content-Type', 'application/json');
 
     return this.http.delete(this.API + 'delete/' + word._id, {
+        headers: headers
+      })
+      .map(res => res.json());
+  }
+
+  createOwnCollection(collection) {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.post(this.API + 'users/createOwnCollection', collection, {
         headers: headers
       })
       .map(res => res.json());

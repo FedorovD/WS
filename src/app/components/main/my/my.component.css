@@ -1,6 +1,6 @@
 .card {
   min-width: 200px;
-  max-width: 280px;
+  max-width: 340px;
   margin: 10px;
   -webkit-box-shadow: 3px 3px 15px 2px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 3px 3px 15px 2px rgba(0, 0, 0, 0.75);
@@ -22,7 +22,7 @@
 .search {
   max-width: 800px;
   margin: 20px auto;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 button.delete {
@@ -36,7 +36,7 @@ button.delete {
 }
 
 .dontAsk-wrapper {
-  padding: 5px;
+  padding-bottom: 5px;
 }
 
 .select-wrapper {
@@ -45,4 +45,28 @@ button.delete {
   margin: 0 auto;
   padding-top: 100px;
   flex-wrap: wrap;
+}
+
+.controls-wrapper .displaying-wrapper {
+  padding: 5px;
+  float: right;
+}
+.controls-wrapper .displaying-wrapper button,
+.controls-wrapper .manage-wrapper button { 
+  margin: auto 4px;
+}
+
+.controls-wrapper .manage-wrapper {
+  padding: 5px;
+  float: left;
+}
+
+
+.adddelete-wrapper span.icon{
+  cursor: pointer;
+}
+
+
+.modal.addCollection .modal-card{
+  max-width: 480px;
 }
