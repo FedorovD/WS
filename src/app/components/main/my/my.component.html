@@ -42,7 +42,7 @@
   <div class="s-wrapper" [hidden]="collection.words | hideCollection: search">
     <div class="message-header">
     <p>{{collection.name}}</p>
-
+    
     <div class="adddelete-wrapper">
 
       <span class="icon is-small" (click)="onAddWordInCollection(collection)">
@@ -57,7 +57,9 @@
   </div>
   <div class="message-body">
     <h3 class="title is-3">{{collection.description}}</h3>
-
+          <span class="icon primary-color" (click)="onHide(collection)">
+        <i class="fa" [ngClass]="{'fa-angle-down': !collection.hidden, 'fa-angle-right': collection.hidden}"></i>
+      </span>
 
   <table class="table is-narrow" *ngIf="displaying[1].disable">
   <thead>
@@ -68,7 +70,7 @@
       <th>Exmpl</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody *ngIf="!collection.hidden">
     <tr *ngFor="let word of collection.words | instantSearch: search;let i=index ">
       <th>{{i+1}}</th>
       <th>{{word.english}}</th>
@@ -81,7 +83,7 @@
 
 
 
-    <masonry class="wrapper" [ngClass]="'animated fadeInLeft'" [options]="{ transitionDuration: '0.2s', fitWidth: true }" *ngIf="displaying[0].disable">
+    <masonry class="wrapper" [ngClass]="'animated fadeInLeft'" [options]="{ transitionDuration: '0.2s', fitWidth: true }" *ngIf="displaying[0].disable && !collection.hidden">
       <masonry-brick class="card" *ngFor="let word of collection.words | instantSearch: search" (mouseover)='word.hover = true' (mouseleave)="word.hover = false">
       <button class="delete" *ngIf="word.hover" (click)="onDelete(word);modalDelete.classList.toggle('is-active')"></button>
       <div class="card-content">
@@ -158,7 +160,7 @@
                     <div class="field-body">
                       <div class="field">
                         <div class="control">
-                          <button class="button is-primary" (click)="onAddNewCollection(name.value, descriptiom.value)">
+                          <button class="button is-primary" (click)="onCreateNewCollection(name.value, descriptiom.value)">
                             Создать
                           </button>
                         </div>
@@ -184,7 +186,7 @@
                       <th>{{collection.name}}</th>
                       <th>{{collection.description}}</th>
                       <th>
-                          <span class="icon is-small" style="cursor: pointer" [ngClass]="{'primary-color': collection.added}">
+                          <span class="icon is-small" style="cursor: pointer" [ngClass]="{'primary-color': collection.added}" (click)="onAddCollection(collection)">
                           <i class="fa fa-check"></i>
                         </span>
 

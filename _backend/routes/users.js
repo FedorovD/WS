@@ -116,12 +116,26 @@ router.post('/subscribeToCollection', passport.authenticate('jwt', {
     session: false
 }), (req, res, next) => {
     let query = {
-        "collection_id": req.body.id,
+        "collection_id": req.body.collection_id,
         "user": req.user
     };
-    User.subscribeToCollection(query, (err, user) => {
+    User.subscribeToCollection(query, (err, collection) => {
         if(err) return res.json({success: false,msg: `${err}`});
-        return res.json({success: true, msg: `${query.collection_id} added`});
+        return res.json({success: true, msg: `${query.collection_id} added`, collection: collection});
+
+});   
+});
+
+router.post('/unsubscribeToCollection', passport.authenticate('jwt', {
+    session: false
+}), (req, res, next) => {
+    let query = {
+        "collection_id": req.body.collection_id,
+        "user": req.user
+    };
+    User.unsubscribeToCollection(query, (err, collection) => {
+        if(err) return res.json({success: false,msg: `${err}`});
+        return res.json({success: true, msg: `${query.collection_id} unsubscribed`, collection: collection});
 
 });   
 });

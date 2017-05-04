@@ -10,7 +10,7 @@ import { AuthService } from '../../_services/auth.service';
 export class MainComponent implements OnInit {
   words: any[];
   user: any;
-  addedCollections: any[];
+  addedCollections: any[] = [];
 
   sections  = {
     menu: {

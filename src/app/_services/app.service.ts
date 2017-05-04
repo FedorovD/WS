@@ -73,6 +73,30 @@ export class AppService {
       .map(res => res.json());
   }
 
+  subscribeToCollection(collection_id) {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    let query = {collection_id: collection_id};
+    return this.http.post(this.API + 'users/subscribeToCollection', query, {
+        headers: headers
+      })
+      .map(res => res.json());
+  }
+
+    unsubscribeToCollection(collection_id) {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    let query = {collection_id: collection_id};
+    return this.http.post(this.API + 'users/unsubscribeToCollection', query, {
+        headers: headers
+      })
+      .map(res => res.json());
+  }
+
   showFlashMessage(title: string, classes: string, timeout: number) {
     this.flashMessage.show(title, {cssClass: classes, timeout: timeout});
   }

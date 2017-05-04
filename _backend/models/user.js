@@ -98,7 +98,38 @@ module.exports.subscribeToCollection = function (data, callback) {
 
         if(user.added_collections && user.added_collections.indexOf(collection_id) == -1) {
             user.added_collections.push(collection_id);
-            user.save(callback);
+            user.save(callback(null, collection));
+        }else callback(`${collection_id} added already`, "");
+    });
+        }
+          
+
+        
+    });
+};
+
+module.exports.unsubscribeToCollection = function (data, callback) {
+    let collection_id = data.collection_id;
+    Collection.getCollectionById(collection_id, (err, collection)=> {
+        console.log('231', collection);
+        if(err){
+            console.log(err);
+        } 
+         if(!collection){
+            return callback(`${collection_id} don't exist`, "");
+        }else {
+            let user = data.user;
+         User.findById(user._id, (err, _user)=>{
+        if(err) return console.log(err);
+
+        if(user.added_collections && user.added_collections.indexOf(collection_id) > -1) {
+            console.log()
+             user.added_collections.forEach(_collection_id => {
+                 if(_collection_id == collection_id){
+                    _user.added_collections.splice(_user.added_collections.indexOf(_collection_id), 1);
+                    _user.save(callback(null, collection));
+                 } 
+             });
         }else callback(`${collection_id} added already`, "");
     });
         }
