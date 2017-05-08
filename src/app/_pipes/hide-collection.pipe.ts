@@ -5,7 +5,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class HideCollectionPipe implements PipeTransform {
 
-  transform(value: any, search: String = ''): boolean {
+  transform(value: any, search: String = '', active?: boolean): boolean {
+    if (!active) return false;
     let searchQuery = search;
     let displayedWords = value.filter((el)=>{
     let searchValueEng = el.english;

@@ -11,6 +11,7 @@ export class MainComponent implements OnInit {
   words: any[];
   user: any;
   addedCollections: any[] = [];
+  ownCollections: any[] = [];
 
   sections  = {
     menu: {
@@ -56,6 +57,8 @@ export class MainComponent implements OnInit {
     this.authService.getProfile().subscribe(res => this.user = res.user.username);
 
     this.appService.getAddedCollections().subscribe(_collections => this.addedCollections = _collections.collections);
+
+    this.appService.getOwnCollections().subscribe(_collections => this.ownCollections = _collections.collections);
    }
 
   ngOnInit() {

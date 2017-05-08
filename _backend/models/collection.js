@@ -32,7 +32,7 @@ module.exports.addCollection = function (name, callback) {
     name.save(callback);
 };
 
-module.exports.getAllCollections = function (callback) {
+module.exports.getGlobalCollections = function (callback) {
     Collection.find({}, function(err, collections) {
         if(err) console.log(err);
         else callback(collections);

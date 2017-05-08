@@ -1,5 +1,5 @@
-import { AppService } from '../../../_services/app.service';
-import {Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {AppService} from '../../../_services/app.service';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-my',
@@ -9,6 +9,7 @@ import {Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class MyComponent implements OnInit {
   @Input() words: any[];
   @Input() addedCollections: any[];
+  @Input() ownCollections: any[];
   @Output() deleteWord: EventEmitter < any > = new EventEmitter();
 
   search: String;
@@ -17,12 +18,14 @@ export class MyComponent implements OnInit {
   displaying = [{
       name: 'card',
       icon: 'fa-clone',
-      disable: true
+      disable: true,
+      abbr: 'Отобразить карточками'
     },
     {
       name: 'list',
       icon: 'fa-list',
-      disable: false
+      disable: false,
+      abbr: 'Отобразить таблицей'
     }
   ];
 
@@ -39,7 +42,7 @@ export class MyComponent implements OnInit {
 
   ngOnInit() {}
 
-  onDelete(e) {                                                 //с этой сранью надо будет что-то сделать
+  onDelete(e) {                                             //с этой сранью надо будет что-то сделать
     if (this.dontAsk) {
       this.deleteWord.emit(e);
     } else {
@@ -61,7 +64,8 @@ export class MyComponent implements OnInit {
   }
 
   onDeleteCollection(collection) {
-    this.appService.unsubscribeToCollection(collection._id).subscribe(res => {
+    if (this.addedCollections.indexOf(collection) > -1) {
+          this.appService.unsubscribeToCollection(collection._id).subscribe(res => {
       if (!res.success) {
         return this.appService.showFlashMessage(`${res.msg}`, 'notification is-info animated bounceInDown', 2000);
       } else {
@@ -74,10 +78,31 @@ export class MyComponent implements OnInit {
       }
 
     });
+
+
+  } else if (this.ownCollections.indexOf(collection) > -1) {
+     this.appService.deleteOwnCollection(collection._id).subscribe(res => {
+      if (!res.success) {
+        return this.appService.showFlashMessage(`${res.msg}`, 'notification is-info animated bounceInDown', 2000);
+      } else {
+        this.ownCollections.forEach(_collection => {
+          if (_collection._id == res.collection.collection_id) {
+            this.ownCollections.splice(this.ownCollections.indexOf(_collection), 1);
+            this.appService.showFlashMessage(`${collection.name} collection successfully deleted.`, 'notification is-success animated bounceInDown', 2000);
+          }
+        });
+      }
+
+    });
+
+    } else {
+      this.appService.showFlashMessage(`error`, 'notification is-warning animated bounceInDown', 2000);
+    }
+
   }
 
   onAddNewCollectionModal() {
-    this.appService.getAllCollections().subscribe(collections => {
+    this.appService.getGlobalCollections().subscribe(collections => {
       this.allCollections = collections;
       this.allCollections.forEach(collection => {
         this.addedCollections.forEach(_collection => {
@@ -92,7 +117,14 @@ export class MyComponent implements OnInit {
       name: name,
       description: description
     };
-    this.appService.createOwnCollection(collection).subscribe(res => console.log(res));
+    this.appService.createOwnCollection(collection).subscribe(res => {
+      if (!res.success) {
+        return this.appService.showFlashMessage(`${res.msg}`, 'notification is-info animated bounceInDown', 2000);
+      } else {
+        this.ownCollections.push(res.collection);
+         this.appService.showFlashMessage(`${collection.name} collection successfully created.`, 'notification is-success animated bounceInDown', 2000);
+      }
+    });
   }
 
   onAddCollection(collection) {
@@ -116,11 +148,19 @@ export class MyComponent implements OnInit {
   }
 
   onHide(collection) {
-    this.addedCollections.forEach(_collection => {
-      if (_collection._id == collection._id) {
-        _collection.hidden ? _collection.hidden = false : _collection.hidden = true;
-      }
-    });
+    if (collection.hidden === undefined) collection.hidden = false;
+    this.addedCollections.indexOf(collection) > -1 ?
+      this.addedCollections.forEach(_collection => {
+        if (_collection._id == collection._id) {
+          _collection.hidden ? _collection.hidden = false : _collection.hidden = true;
+        }
+      }) :
+      this.ownCollections.forEach(_collection => {
+        if (_collection._id == collection._id) {
+          _collection.hidden ? _collection.hidden = false : _collection.hidden = true;
+        }
+      });
+
   }
 
   onAddCollectionTab(tab) {

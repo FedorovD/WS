@@ -111,6 +111,16 @@ router.get('/getAddedCollections', passport.authenticate('jwt', {
 
 });
 
+router.get('/getOwnCollections', passport.authenticate('jwt', {
+    session: false
+}), (req, res, next) => {
+    User.getOwnCollections(req.user, (err, collections)=>{
+        if(err) return res.json({success: false,msg: `${err}`});
+        return res.json({success: true, collections: collections});
+    });
+
+});
+
 
 router.post('/subscribeToCollection', passport.authenticate('jwt', {
     session: false
@@ -140,6 +150,20 @@ router.post('/unsubscribeToCollection', passport.authenticate('jwt', {
 });   
 });
 
+router.post('/deleteOwnCollection', passport.authenticate('jwt', {
+    session: false
+}), (req, res, next) => {
+    let query = {
+        "collection_id": req.body.collection_id,
+        "user": req.user
+    };
+    User.deleteOwnCollection(query, (err, collection) => {
+        if(err) return res.json({success: false,msg: `${err}`});
+        return res.json({success: true, msg: `${query.collection_id} deleted`, collection: collection});
+
+});   
+});
+
 
 router.post('/createOwnCollection', passport.authenticate('jwt', {
     session: false
@@ -152,9 +176,9 @@ router.post('/createOwnCollection', passport.authenticate('jwt', {
     }),
     user: req.user
     };
-    User.createOwnCollection(query, (err, data)=>{
+    User.createOwnCollection(query, (err, collection)=>{
         if(err) return res.json({success: false,msg: `${err}`});
-        else return res.json({success: true, msg: `${query.newCollection} created`});
+        else return res.json({success: true, msg: `${query.newCollection} created`, collection: collection});
     });
 });
 

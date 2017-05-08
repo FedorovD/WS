@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import {FlashMessagesService} from 'angular2-flash-messages/module';
+import { FlashMessagesService } from 'angular2-flash-messages/module';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -8,7 +8,7 @@ export class AppService {
 
   API: String = 'http://localhost:4201/';
   authToken: any;
-  constructor(private http: Http, private flashMessage: FlashMessagesService) {}
+  constructor(private http: Http, private flashMessage: FlashMessagesService) { }
 
 
   addWord(word) {
@@ -25,17 +25,27 @@ export class AppService {
     headers.append('Content-Type', 'application/json');
 
     return this.http.get(this.API + 'getAll', {
-        headers: headers
-      })
+      headers: headers
+    })
       .map(res => res.json());
   }
 
-    getAllCollections() {
+  getGlobalCollections() {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.get(this.API + 'collections/getAll', {
-        headers: headers
-      })
+    return this.http.get(this.API + 'collections/getGlobalCollections', {
+      headers: headers
+    })
+      .map(res => res.json());
+  }
+  getOwnCollections() {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(this.API + 'users/getOwnCollections', {
+      headers: headers
+    })
       .map(res => res.json());
   }
   getAddedCollections() {
@@ -45,8 +55,8 @@ export class AppService {
     headers.append('Content-Type', 'application/json');
 
     return this.http.get(this.API + 'users/getAddedCollections', {
-        headers: headers
-      })
+      headers: headers
+    })
       .map(res => res.json());
   }
 
@@ -56,8 +66,8 @@ export class AppService {
     headers.append('Content-Type', 'application/json');
 
     return this.http.delete(this.API + 'delete/' + word._id, {
-        headers: headers
-      })
+      headers: headers
+    })
       .map(res => res.json());
   }
 
@@ -68,8 +78,8 @@ export class AppService {
     headers.append('Content-Type', 'application/json');
 
     return this.http.post(this.API + 'users/createOwnCollection', collection, {
-        headers: headers
-      })
+      headers: headers
+    })
       .map(res => res.json());
   }
 
@@ -78,27 +88,51 @@ export class AppService {
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
-    let query = {collection_id: collection_id};
+    let query = { collection_id: collection_id };
     return this.http.post(this.API + 'users/subscribeToCollection', query, {
-        headers: headers
-      })
+      headers: headers
+    })
       .map(res => res.json());
   }
 
-    unsubscribeToCollection(collection_id) {
+  unsubscribeToCollection(collection_id) {
     let headers = new Headers();
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
-    let query = {collection_id: collection_id};
+    let query = { collection_id: collection_id };
     return this.http.post(this.API + 'users/unsubscribeToCollection', query, {
-        headers: headers
-      })
+      headers: headers
+    })
       .map(res => res.json());
   }
 
+  deleteOwnCollection(collection_id) {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    let query = { collection_id: collection_id };
+    return this.http.post(this.API + 'users/deleteOwnCollection', query, {
+      headers: headers
+    })
+      .map(res => res.json());
+  }
+
+
+  addWordInOwnCollection(word, collection_id) {
+    // let headers = new Headers();
+    // this.loadToken();
+    // headers.append('Authorization', this.authToken);
+    // headers.append('Content-Type', 'application/json');
+    // let query = { collection_id: collection_id };
+    // return this.http.post(this.API + 'users/deleteOwnCollection', query, {
+    //   headers: headers
+    // })
+    //   .map(res => res.json());
+  }
   showFlashMessage(title: string, classes: string, timeout: number) {
-    this.flashMessage.show(title, {cssClass: classes, timeout: timeout});
+    this.flashMessage.show(title, { cssClass: classes, timeout: timeout });
   }
 
 

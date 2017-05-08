@@ -31,8 +31,8 @@ router.post('/add', (req, res, next) => {
 });
 
 
-router.get('/getAll', (req, res) => {
-    Collection.getAllCollections((collections, err) => {
+router.get('/getGlobalCollections', (req, res) => {
+    Collection.getGlobalCollections((collections, err) => {
         if(err) console.log(err);
         else res.send(collections);
     });

@@ -27,6 +27,7 @@ import { MyComponent } from './components/main/my/my.component';
 import { TranslateWordComponent } from './components/main/learn/translate-word/translate-word.component';
 import { WordTranslateComponent } from './components/main/learn/word-translate/word-translate.component';
 import { AudioWordComponent } from './components/main/learn/audio-word/audio-word.component';
+import { MergePipe } from './_pipes/merge.pipe';
 
 const appRoutes: Routes = [
     { path: '', component: MainComponent, canActivate: [AuthGuard]},
@@ -49,7 +50,8 @@ const appRoutes: Routes = [
     MyComponent,
     TranslateWordComponent,
     WordTranslateComponent,
-    AudioWordComponent
+    AudioWordComponent,
+    MergePipe
   ],
   imports: [
     BrowserModule,
