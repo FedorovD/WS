@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class InstantSearchPipe implements PipeTransform {
 
-    transform(value: any, search: String = ''): any {
+    transform(value: any=[], search: String = ''): any {
     let searchQuery = search;
     let displayedWords = value.filter(el => {
     let searchValueEng = el.english;
