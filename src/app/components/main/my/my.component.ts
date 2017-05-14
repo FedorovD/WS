@@ -15,7 +15,7 @@ export class MyComponent implements OnInit {
 
   search: String;
   dontAsk: HTMLElement;
-  allCollections: any[];
+  globalCollections: any[];
   displaying = [{
       name: 'card',
       icon: 'fa-clone',
@@ -42,7 +42,6 @@ export class MyComponent implements OnInit {
   constructor(private appService: AppService) {}
 
   ngOnInit() {
-    console.log(this.collections);
   }
 
   onDelete(e) {                                             //с этой сранью надо будет что-то сделать
@@ -67,48 +66,29 @@ export class MyComponent implements OnInit {
   }
 
   onDeleteCollection(collection) {
-    if (this.addedCollections.indexOf(collection) > -1) {
-          this.appService.unsubscribeToCollection(collection._id).subscribe(res => {
+    if (this.collections.indexOf(collection) > -1) {
+          this.appService.deleteCollection(collection._id).subscribe(res => {
       if (!res.success) {
         return this.appService.showFlashMessage(`${res.msg}`, 'notification is-info animated bounceInDown', 2000);
       } else {
-        this.addedCollections.forEach(_collection => {
-          if (_collection._id == res.collection._id) {
-            this.addedCollections.splice(this.addedCollections.indexOf(_collection), 1);
-            this.appService.showFlashMessage(`${collection.name} collection successfully unsubscribed.`, 'notification is-success animated bounceInDown', 2000);
-          }
-        });
-      }
-
-    });
-
-
-  } else if (this.ownCollections.indexOf(collection) > -1) {
-     this.appService.deleteOwnCollection(collection._id).subscribe(res => {
-      if (!res.success) {
-        return this.appService.showFlashMessage(`${res.msg}`, 'notification is-info animated bounceInDown', 2000);
-      } else {
-        this.ownCollections.forEach(_collection => {
-          if (_collection._id == res.collection.collection_id) {
-            this.ownCollections.splice(this.ownCollections.indexOf(_collection), 1);
+        this.collections.forEach(_collection => {
+          if (_collection._id == res.collection) {
+            this.collections.splice(this.collections.indexOf(_collection), 1);
             this.appService.showFlashMessage(`${collection.name} collection successfully deleted.`, 'notification is-success animated bounceInDown', 2000);
           }
         });
       }
-
     });
-
     } else {
       this.appService.showFlashMessage(`error`, 'notification is-warning animated bounceInDown', 2000);
     }
-
   }
 
   onAddNewCollectionModal() {
     this.appService.getGlobalCollections().subscribe(collections => {
-      this.allCollections = collections;
-      this.allCollections.forEach(collection => {
-        this.addedCollections.forEach(_collection => {
+      this.globalCollections = collections;
+      this.globalCollections.forEach(collection => {
+        this.collections.forEach(_collection => {
           if (_collection._id == collection._id) collection.added = true;
         });
       });
@@ -124,7 +104,7 @@ export class MyComponent implements OnInit {
       if (!res.success) {
         return this.appService.showFlashMessage(`${res.msg}`, 'notification is-info animated bounceInDown', 2000);
       } else {
-        this.ownCollections.push(res.collection);
+        this.collections.unshift(res.collection);
          this.appService.showFlashMessage(`${collection.name} collection successfully created.`, 'notification is-success animated bounceInDown', 2000);
       }
     });
@@ -138,10 +118,10 @@ export class MyComponent implements OnInit {
         if (!res.success) {
           this.appService.showFlashMessage(`${res.msg}`, 'notification is-info animated bounceInDown', 2000);
         } else {
-          this.allCollections.forEach(_collection => {
+          this.globalCollections.forEach(_collection => {
             if (_collection._id == collection._id) {
-              this.allCollections[this.allCollections.indexOf(_collection)].added = true;
-              this.addedCollections.push(res.collection);
+              this.globalCollections[this.globalCollections.indexOf(_collection)].added = true;
+              this.collections.push(res.collection);
               this.appService.showFlashMessage(`${collection.name} collection successfully added.`, 'notification is-success animated bounceInDown', 2000);
             }
           });

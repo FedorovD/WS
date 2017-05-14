@@ -19,7 +19,7 @@ const userSchema = mongoose.Schema({
     required: true
   },
   added_collections: {
-    type: [String]
+    type: []
   },
   own_collections: {
     type: [Collection.Schema]
@@ -94,8 +94,28 @@ module.exports.subscribeToCollection = function (data, callback) {
         if (err) return console.log(err);
 
         if (user.added_collections && user.added_collections.indexOf(collection_id) == -1) {
-          user.added_collections.push(collection_id);
-          user.save(callback(null, collection));
+          let newCollection = {
+            collection_id: collection_id,
+            meta: {
+              wt : {
+                time: 0,
+                percent: 0
+              },
+              tw : {
+                time: 0,
+                percent: 0
+              },
+              aw : {
+                time: 0,
+                percent: 0
+              }
+            }
+          };
+          user.added_collections.push(newCollection);
+          newCollection.name = collection.name;
+          newCollection.description = collection.description;
+          newCollection.words = collection.words;
+          user.save(callback(null, newCollection));
         } else callback(`${collection_id} added already`, "");
       });
     }
@@ -165,7 +185,6 @@ module.exports.createOwnCollection = function (data, callback) {
       percent: 0
     }
   };
-  console.log(newCollection)
   let user = data.user;
   let allCollectionsName = [];
   user.own_collections.forEach(item => allCollectionsName.push(item.name));
@@ -183,15 +202,15 @@ module.exports.createOwnCollection = function (data, callback) {
 module.exports.getAddedCollections = function (user, callback) {
   let user_id = user._id;
   let returnedCollections = [];
-  User.findById(user_id, (err, user) => {
+  User.findById(user_id, (err, _user) => {
     if (err) return console.log(err);
-    user.added_collections.forEach((collection_id, index) => {
+    _user.added_collections.forEach((collection_id, index) => {
       Collection.findById(collection_id, (err, collection) => {
         if (err) return console.log(err);
         else {
           returnedCollections.push(collection);
         }
-        if (returnedCollections.length == user.added_collections.length) return callback(null, returnedCollections);
+        if (returnedCollections.length == _user.added_collections.length) return callback(null, returnedCollections);
 
         //тут надо исправлять
       });
@@ -214,69 +233,118 @@ module.exports.getOwnCollections = function (user, callback) {
 module.exports.getCollections = function (user, callback) {
   let user_id = user._id;
   let returnedCollections = [];
-
   User.findById(user_id, (err, _user) => {
     if (err) return console.log(err);
 
-    if(_user.own_collections.length > 0) {
+    if (_user.own_collections.length > 0) {
       _user.own_collections.forEach(_collection => returnedCollections.push(_collection));
     }
 
-     user.added_collections.forEach((collection_id, index) => {
-      Collection.findById(collection_id, (err, collection) => {
-        if (err) return console.log(err);
-        else {
-          console.log(collection);
-          returnedCollections.push(collection);
-        }
-        if (returnedCollections.length == user.added_collections.length+1) return callback(null, returnedCollections);
-        //тут надо исправлять
+    if (_user.added_collections.length > 0) {
+      user.added_collections.forEach((collection, index) => {
+        Collection.findById(collection.collection_id, (err, _collection) => {
+          if (err) return console.log(err);
+          _collection.meta = collection.meta;
+          returnedCollections.push(_collection);
+          if (returnedCollections.length == _user.own_collections.length + _user.added_collections.length) callback(null, returnedCollections);
+          //тут надо исправлять, возможно
+        });
       });
-
-    });
-
-  });
-};
-
-module.exports.setExtraCollectionInf = function (data, callback) {
-  const user_id = data.user._id;
-  const section = data.newExtraInf.section;
-  const newExtraInf = {
-    id_collection: data.newExtraInf.id_collection,
-    time: data.newExtraInf.time,
-    percent: data.newExtraInf.percent
-  };
-
-  User.findById(user_id, (err, _user) => {
-    if (err) return console.log(err);
-
-    if (_user.extraInfForCollections) {
-      if (_user.extraInfForCollections[section]) {
-        if (_user.extraInfForCollections[section].length > 0) {
-          _user.extraInfForCollections[section].forEach(item => {
-            if (item.id_collection == newExtraInf.id_collection) {
-              item.time = newExtraInf.time;
-              item.percent = newExtraInf.percent;
-            }
-          });
-          // _user.extraInfForCollections[section].push(newExtraInf); --------------------------------------------------------------
-          _user.save(callback);
-        } else {
-          _user.extraInfForCollections[section].push(newExtraInf);
-          _user.save(callback);
-        }
-
-      } else {
-        _user.extraInfForCollections[section].push(newExtraInf);
-        _user.save(callback);
-      }
     } else {
-      _user.extraInfForCollections[section].push(newExtraInf);
-      _user.save(callback);
+      callback(null, returnedCollections);
     }
 
   });
 };
+
+module.exports.deleteCollection = function (data, callback) {
+  let collection_id = data.collection_id;
+  let user = data.user;
+  User.findById(user._id, (err, _user) => {
+    if (err) return console.log(err);
+    if (_user.added_collections.length > 0) {
+      _user.added_collections.forEach((_collection, index) => {
+        if(_collection.collection_id == collection_id) {
+          _user.added_collections.splice(index, 1);
+          return _user.save(callback(null, collection_id));
+        }
+      });
+
+    } else if (_user.own_collections.length > 0) {
+      _user.own_collections.forEach((_collection, index) => {
+        if (_collection._id == collection_id) {
+          _user.own_collections.splice(index, 1);
+          _user.save(callback(null, collection_id));
+        }
+      })
+    } else {
+      callback("err | deleteCollection", "")
+    }
+
+  });
+  // Collection.getCollectionById(collection_id, (err, collection) => {
+  //   if (err) {
+  //     console.log(err);
+  //   }
+  //   if (!collection) {
+  //     return callback(`${collection_id} don't exist`, "");
+  //   } else {
+  //     let user = data.user;
+  //     User.findById(user._id, (err, _user) => {
+  //       if (err) return console.log(err);
+
+  //       if (user.added_collections && user.added_collections.indexOf(collection_id) > -1) {
+  //         user.added_collections.forEach(_collection_id => {
+  //           if (_collection_id == collection_id) {
+  //             _user.added_collections.splice(_user.added_collections.indexOf(_collection_id), 1);
+  //             _user.save(callback(null, collection));
+  //           }
+  //         });
+  //       } else callback(`${collection_id} added already`, "");
+  //     });
+  //   }
+  // });
+};
+
+// module.exports.setExtraCollectionInf = function (data, callback) {
+//   const user_id = data.user._id;
+//   const section = data.newExtraInf.section;
+//   const newExtraInf = {
+//     id_collection: data.newExtraInf.id_collection,
+//     time: data.newExtraInf.time,
+//     percent: data.newExtraInf.percent
+//   };
+
+//   User.findById(user_id, (err, _user) => {
+//     if (err) return console.log(err);
+
+//     if (_user.extraInfForCollections) {
+//       if (_user.extraInfForCollections[section]) {
+//         if (_user.extraInfForCollections[section].length > 0) {
+//           _user.extraInfForCollections[section].forEach(item => {
+//             if (item.id_collection == newExtraInf.id_collection) {
+//               item.time = newExtraInf.time;
+//               item.percent = newExtraInf.percent;
+//             }
+//           });
+//           // _user.extraInfForCollections[section].push(newExtraInf); --------------------------------------------------------------
+//           _user.save(callback);
+//         } else {
+//           _user.extraInfForCollections[section].push(newExtraInf);
+//           _user.save(callback);
+//         }
+
+//       } else {
+//         _user.extraInfForCollections[section].push(newExtraInf);
+//         _user.save(callback);
+//       }
+//     } else {
+//       _user.extraInfForCollections[section].push(newExtraInf);
+//       _user.save(callback);
+//     }
+
+//   });
+// };
 
 
 

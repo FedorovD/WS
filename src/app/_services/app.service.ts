@@ -118,6 +118,18 @@ export class AppService {
       .map(res => res.json());
   }
 
+    deleteCollection(collection_id) {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    let query = { collection_id: collection_id };
+    return this.http.post(this.API + 'users/deleteCollection', query, {
+      headers: headers
+    })
+      .map(res => res.json());
+  }
+
   deleteOwnCollection(collection_id) {
     let headers = new Headers();
     this.loadToken();

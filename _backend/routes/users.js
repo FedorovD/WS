@@ -160,6 +160,20 @@ router.post('/unsubscribeToCollection', passport.authenticate('jwt', {
 });   
 });
 
+router.post('/deleteCollection', passport.authenticate('jwt', {
+    session: false
+}), (req, res, next) => {
+    let query = {
+        "collection_id": req.body.collection_id,
+        "user": req.user
+    };
+    User.deleteCollection(query, (err, collection) => {
+        if(err) return res.json({success: false,msg: `${err}`});
+        return res.json({success: true, msg: `${query.collection_id} deleted`, collection: collection});
+
+});   
+});
+
 router.post('/deleteOwnCollection', passport.authenticate('jwt', {
     session: false
 }), (req, res, next) => {
@@ -212,23 +226,23 @@ router.post('/addWordInOwnCollection', passport.authenticate('jwt', {
 });
 
 
-router.post('/setExtraInfForCollections', passport.authenticate('jwt', {
-    session: false
-}), (req, res, next) => {
-     let query = {
-        newExtraInf: {
-            section: req.body.section,
-            id_collection: req.body.id_collection,
-            time: req.body.time,
-            percent: req.body.percent
+// router.post('/setExtraInfForCollections', passport.authenticate('jwt', {
+//     session: false
+// }), (req, res, next) => {
+//      let query = {
+//         newExtraInf: {
+//             section: req.body.section,
+//             id_collection: req.body.id_collection,
+//             time: req.body.time,
+//             percent: req.body.percent
 
-        },
-    user: req.user,
-};
-    User.setExtraCollectionInf(query, (err, data)=>{
-        if(err) return res.json({success: false,msg: `${err}`});
-        else return res.send(data);
-    });
-});
+//         },
+//     user: req.user,
+// };
+//     User.setExtraCollectionInf(query, (err, data)=>{
+//         if(err) return res.json({success: false,msg: `${err}`});
+//         else return res.send(data);
+//     });
+// });
 
 module.exports = router;

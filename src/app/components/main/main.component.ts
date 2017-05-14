@@ -16,13 +16,13 @@ export class MainComponent implements OnInit {
 
   sections  = {
     menu: {
-      active: false
+      active: true
     },
     trainings: [
     {
       section: "all-my-words",
       title: "Все мои слова",
-      description: "Просмотр, добавление, удаление и редактирование своего набора слов.",
+      description: "Просмотр, добавление,unsubscribed удаление и редактирование своего набора слов.",
       img: "./assets/whale.svg",
       block: true,
       active: false
@@ -33,7 +33,7 @@ export class MainComponent implements OnInit {
       description: "Тренировка “Слово-перевод” улучшает навык перевода слов с английского на ваш родной язык, помогая лучше понимать английские тексты и речь.",
       img: "./assets/whale.svg",
       block: false,
-      active: true
+      active: false
     },
     {
       section: "translate-word",
@@ -59,9 +59,9 @@ export class MainComponent implements OnInit {
 
     this.appService.getAddedCollections().subscribe(_collections => this.addedCollections = _collections.collections);
 
-    this.appService.getOwnCollections().subscribe(_collections => {this.ownCollections = _collections.collections;console.log(_collections)});
+    this.appService.getOwnCollections().subscribe(_collections => {this.ownCollections = _collections.collections;});
 
-    this.appService.getCollections().subscribe(_collections => this.collections = _collections.collections);
+    this.appService.getCollections().subscribe(_collections => {this.collections = _collections.collections; console.log(_collections);});
    }
 
   ngOnInit() {

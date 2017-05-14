@@ -17,15 +17,14 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let collection of addedCollections | merge: ownCollections; let i=index">
+        <!--<tr *ngFor="let collection of addedCollections | merge: ownCollections; let i=index">-->
+        <tr *ngFor="let collection of collections; let i=index">
           <th>{{i+1}}</th>
           <td>{{collection.name}}</td>
           <td>{{collection.description}}</td>
           <td>{{collection.words.length}}</td>
-          <!--<td>{{collection.meta.wt.time}}</td>
-          <td>{{collection.meta.wt.percent}}</td>-->
-          <td>0</td>
-          <td>0</td>
+          <td>{{collection.meta.wt.time}} min</td>
+          <td>{{collection.meta.wt.percent}} %</td>
           <td>
             <span class="icon is-small primary-color" style="cursor: pointer">
                   <i class="fa fa-play"></i>

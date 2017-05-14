@@ -8,6 +8,8 @@ import {Component,OnInit,Input} from '@angular/core';
 export class WordTranslateComponent implements OnInit {
   @Input() addedCollections: any[];
   @Input() ownCollections: any[];
+
+  @Input() collections: any[];
   currentSession = [
     {
       active: true,
