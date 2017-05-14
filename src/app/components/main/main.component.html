@@ -30,8 +30,8 @@
       </div>
   </div>
 
-<app-my *ngIf="sections.trainings[0].active" [words]="words" (deleteWord)="deleteWord($event)" [addedCollections]="addedCollections" [ownCollections]="ownCollections"></app-my>
-<app-word-translate *ngIf="sections.trainings[1].active"></app-word-translate>
+<app-my *ngIf="sections.trainings[0].active" (deleteWord)="deleteWord($event)" [addedCollections]="addedCollections" [ownCollections]="ownCollections" [collections]="collections"></app-my>
+<app-word-translate *ngIf="sections.trainings[1].active" [addedCollections]="addedCollections" [ownCollections]="ownCollections"></app-word-translate>
 <app-translate-word *ngIf="sections.trainings[2].active"></app-translate-word>
 <app-audio-word *ngIf="sections.trainings[3].active"></app-audio-word>
 

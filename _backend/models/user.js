@@ -24,10 +24,6 @@ const userSchema = mongoose.Schema({
   own_collections: {
     type: [Collection.Schema]
   }
-  // own_collections: {
-  //     type: Schema.ObjectId,
-  //     ref: "Collection"
-  // }
 });
 
 const usersSchema = mongoose.Schema({
@@ -40,6 +36,7 @@ const usersSchema = mongoose.Schema({
 
 
 const User = module.exports = mongoose.model('User', userSchema);
+
 
 module.exports.getUserById = function (id, callback) {
   User.findById(id, callback);
@@ -154,6 +151,21 @@ module.exports.deleteOwnCollection = function (data, callback) {
 
 module.exports.createOwnCollection = function (data, callback) {
   let newCollection = data.newCollection;
+  newCollection.meta = {
+    wt: {
+      time: 0,
+      percent: 0
+    },
+    tw: {
+      time: 0,
+      percent: 0
+    },
+    aw: {
+      time: 0,
+      percent: 0
+    }
+  };
+  console.log(newCollection)
   let user = data.user;
   let allCollectionsName = [];
   user.own_collections.forEach(item => allCollectionsName.push(item.name));
@@ -198,6 +210,75 @@ module.exports.getOwnCollections = function (user, callback) {
 
   });
 };
+
+module.exports.getCollections = function (user, callback) {
+  let user_id = user._id;
+  let returnedCollections = [];
+
+  User.findById(user_id, (err, _user) => {
+    if (err) return console.log(err);
+
+    if(_user.own_collections.length > 0) {
+      _user.own_collections.forEach(_collection => returnedCollections.push(_collection));
+    }
+
+     user.added_collections.forEach((collection_id, index) => {
+      Collection.findById(collection_id, (err, collection) => {
+        if (err) return console.log(err);
+        else {
+          console.log(collection);
+          returnedCollections.push(collection);
+        }
+        if (returnedCollections.length == user.added_collections.length+1) return callback(null, returnedCollections);
+        //тут надо исправлять
+      });
+
+    });
+
+  });
+};
+
+module.exports.setExtraCollectionInf = function (data, callback) {
+  const user_id = data.user._id;
+  const section = data.newExtraInf.section;
+  const newExtraInf = {
+    id_collection: data.newExtraInf.id_collection,
+    time: data.newExtraInf.time,
+    percent: data.newExtraInf.percent
+  };
+
+  User.findById(user_id, (err, _user) => {
+    if (err) return console.log(err);
+
+    if (_user.extraInfForCollections) {
+      if (_user.extraInfForCollections[section]) {
+        if (_user.extraInfForCollections[section].length > 0) {
+          _user.extraInfForCollections[section].forEach(item => {
+            if (item.id_collection == newExtraInf.id_collection) {
+              item.time = newExtraInf.time;
+              item.percent = newExtraInf.percent;
+            }
+          });
+          // _user.extraInfForCollections[section].push(newExtraInf); --------------------------------------------------------------
+          _user.save(callback);
+        } else {
+          _user.extraInfForCollections[section].push(newExtraInf);
+          _user.save(callback);
+        }
+
+      } else {
+        _user.extraInfForCollections[section].push(newExtraInf);
+        _user.save(callback);
+      }
+    } else {
+      _user.extraInfForCollections[section].push(newExtraInf);
+      _user.save(callback);
+    }
+
+  });
+};
+
+
 
 module.exports.putWordInOwnCollection = function (data, callback) {
   let newWord = new Word(data.newWord);

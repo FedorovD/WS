@@ -10,6 +10,7 @@ export class MyComponent implements OnInit {
   @Input() words: any[];
   @Input() addedCollections: any[];
   @Input() ownCollections: any[];
+  @Input() collections: any[];
   @Output() deleteWord: EventEmitter < any > = new EventEmitter();
 
   search: String;
@@ -40,7 +41,9 @@ export class MyComponent implements OnInit {
   ];
   constructor(private appService: AppService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.collections);
+  }
 
   onDelete(e) {                                             //с этой сранью надо будет что-то сделать
     if (this.dontAsk) {
@@ -149,8 +152,8 @@ export class MyComponent implements OnInit {
 
   onHide(collection) {
     if (collection.hidden === undefined) collection.hidden = false;
-    this.addedCollections.indexOf(collection) > -1 ?
-      this.addedCollections.forEach(_collection => {
+    this.collections.indexOf(collection) > -1 ?
+      this.collections.forEach(_collection => {
         if (_collection._id == collection._id) {
           _collection.hidden ? _collection.hidden = false : _collection.hidden = true;
         }

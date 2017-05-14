@@ -34,7 +34,8 @@
   </button>
     </div>
   </div>
-  <article *ngFor="let collection of addedCollections | merge: ownCollections" class="message is-primary">
+  <!--<article *ngFor="let collection of addedCollections | merge: ownCollections" class="message is-primary">-->
+      <article *ngFor="let collection of collections" class="message is-primary">
     <!--<div class="s-wrapper">-->
       <div class="s-wrapper" [hidden]="collection.words | hideCollection: search:visible">
       <div class="message-header">

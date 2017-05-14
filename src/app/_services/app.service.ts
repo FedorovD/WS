@@ -60,6 +60,17 @@ export class AppService {
       .map(res => res.json());
   }
 
+    getCollections() {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(this.API + 'users/getCollections', {
+      headers: headers
+    })
+      .map(res => res.json());
+  }
+
 
   deleteWord(word) {
     let headers = new Headers();

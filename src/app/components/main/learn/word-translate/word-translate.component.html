@@ -1,3 +1,65 @@
-<p>
-  word-translate works!
-</p>
+<div class="container">
+
+  <div class="steps step1">
+    <h2 class="title is-2">Выберите коллекцию для изучения</h2>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>№</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Number of words</th>
+          <th>Studying time</th>
+          <th>Percentage of studied</th>
+          <th>To begin</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let collection of addedCollections | merge: ownCollections; let i=index">
+          <th>{{i+1}}</th>
+          <td>{{collection.name}}</td>
+          <td>{{collection.description}}</td>
+          <td>{{collection.words.length}}</td>
+          <!--<td>{{collection.meta.wt.time}}</td>
+          <td>{{collection.meta.wt.percent}}</td>-->
+          <td>0</td>
+          <td>0</td>
+          <td>
+            <span class="icon is-small primary-color" style="cursor: pointer">
+                  <i class="fa fa-play"></i>
+                        </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+
+  <!--<aside class="collections-wrapper">
+
+    <div class="box collection" *ngFor="let collection of addedCollections | merge: ownCollections">
+      <article class="media">
+        <div class="media-left">
+          <figure class="image is-64x64">
+            <img src="http://bulma.io/images/placeholders/128x128.png" alt="Image">
+          </figure>
+        </div>
+        <div class="media-content">
+          <div class="content">
+            <p>
+              <strong>{{collection.name}}</strong>
+              <br> {{collection.description}}
+            </p>
+          </div>
+        </div>
+      </article>
+      <div class="controlElem">
+          <h1>dddddddddddddddddddddddddddd</h1>
+      </div>
+    </div>
+
+  </aside>-->
+</div>

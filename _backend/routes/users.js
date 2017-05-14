@@ -121,6 +121,16 @@ router.get('/getOwnCollections', passport.authenticate('jwt', {
 
 });
 
+router.get('/getCollections', passport.authenticate('jwt', {
+    session: false
+}), (req, res, next) => {
+    User.getCollections(req.user, (err, collections)=>{
+        if(err) return res.json({success: false,msg: `${err}`});
+        return res.json({success: true, collections: collections});
+    });
+
+});
+
 
 router.post('/subscribeToCollection', passport.authenticate('jwt', {
     session: false
@@ -198,6 +208,26 @@ router.post('/addWordInOwnCollection', passport.authenticate('jwt', {
     User.putWordInOwnCollection(query, (err, data)=>{
         if(err) return res.json({success: false,msg: `${err}`});
         else return res.json({success: true, msg: `${query.newWord} added`});
+    });
+});
+
+
+router.post('/setExtraInfForCollections', passport.authenticate('jwt', {
+    session: false
+}), (req, res, next) => {
+     let query = {
+        newExtraInf: {
+            section: req.body.section,
+            id_collection: req.body.id_collection,
+            time: req.body.time,
+            percent: req.body.percent
+
+        },
+    user: req.user,
+};
+    User.setExtraCollectionInf(query, (err, data)=>{
+        if(err) return res.json({success: false,msg: `${err}`});
+        else return res.send(data);
     });
 });
 
