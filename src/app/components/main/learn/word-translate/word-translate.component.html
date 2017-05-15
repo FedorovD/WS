@@ -1,6 +1,6 @@
 <div class="container">
 
-  <div class="steps step1">
+  <div class="steps step0" [ngClass]="{'animated bounceOutLeft': !currentSession[0].active}" *ngIf="currentSession[0].show">
     <h2 class="title is-2">Выберите коллекцию для изучения</h2>
 
     <table class="table">
@@ -26,7 +26,7 @@
           <td>{{collection.meta.wt.time}} min</td>
           <td>{{collection.meta.wt.percent}} %</td>
           <td>
-            <span class="icon is-small primary-color" style="cursor: pointer">
+            <span class="icon is-small primary-color" style="cursor: pointer" (click)="begin(collection)">
                   <i class="fa fa-play"></i>
                         </span>
           </td>
@@ -37,28 +37,36 @@
   </div>
 
 
-  <!--<aside class="collections-wrapper">
+  <article class="steps step1 message is-primary" [ngClass]="{'animated bounceInRight': currentSession[1].active}" *ngIf="currentSession[1].active">
+    <div class="message-header">
+      <p>Primary</p>
+    </div>
 
-    <div class="box collection" *ngFor="let collection of addedCollections | merge: ownCollections">
-      <article class="media">
-        <div class="media-left">
-          <figure class="image is-64x64">
-            <img src="http://bulma.io/images/placeholders/128x128.png" alt="Image">
-          </figure>
-        </div>
-        <div class="media-content">
-          <div class="content">
-            <p>
-              <strong>{{collection.name}}</strong>
-              <br> {{collection.description}}
-            </p>
+    <div class="message-body is-clearfix">
+      <div class="card-wrapper">
+        <div class="card">
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-3">{{firstStepCurrent.word}}</p>
+              </div>
+            </div>
           </div>
         </div>
-      </article>
-      <div class="controlElem">
-          <h1>dddddddddddddddddddddddddddd</h1>
+      </div>
+
+      <div class="pick-wrapper">
+        <a class="button">Знаю</a>
+        <a class="button">Не знаю</a>
       </div>
     </div>
 
-  </aside>-->
+
+
+
+
+  </article>
+
+
+
 </div>

@@ -48,7 +48,9 @@ body {
 }
 
 
-
+a.button {
+  text-decoration: none;
+}
 .button-block {
     width: 100%;
 }
@@ -56,4 +58,12 @@ body {
 
 .primary-color {
     color: #00D0B2;
+}
+
+
+@media screen and (max-width: 900px) {
+    .alert {
+        width: 50%;
+        left: 25%;
+    }
 }

@@ -115,6 +115,7 @@ module.exports.subscribeToCollection = function (data, callback) {
           newCollection.name = collection.name;
           newCollection.description = collection.description;
           newCollection.words = collection.words;
+          newCollection._id = collection._id;
           user.save(callback(null, newCollection));
         } else callback(`${collection_id} added already`, "");
       });
@@ -266,20 +267,19 @@ module.exports.deleteCollection = function (data, callback) {
       _user.added_collections.forEach((_collection, index) => {
         if(_collection.collection_id == collection_id) {
           _user.added_collections.splice(index, 1);
-          return _user.save(callback(null, collection_id));
         }
       });
 
-    } else if (_user.own_collections.length > 0) {
+    } 
+     if (_user.own_collections.length > 0) {
       _user.own_collections.forEach((_collection, index) => {
         if (_collection._id == collection_id) {
           _user.own_collections.splice(index, 1);
-          _user.save(callback(null, collection_id));
+          
         }
       })
-    } else {
-      callback("err | deleteCollection", "")
-    }
+    } 
+    _user.save(callback(null, collection_id));
 
   });
   // Collection.getCollectionById(collection_id, (err, collection) => {

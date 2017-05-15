@@ -8,8 +8,8 @@ import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 })
 export class MyComponent implements OnInit {
   @Input() words: any[];
-  @Input() addedCollections: any[];
-  @Input() ownCollections: any[];
+  // @Input() addedCollections: any[];
+  // @Input() ownCollections: any[];
   @Input() collections: any[];
   @Output() deleteWord: EventEmitter < any > = new EventEmitter();
 
@@ -67,12 +67,12 @@ export class MyComponent implements OnInit {
 
   onDeleteCollection(collection) {
     if (this.collections.indexOf(collection) > -1) {
-          this.appService.deleteCollection(collection._id).subscribe(res => {
+          this.appService.deleteCollection(collection._id || collection.collection_id).subscribe(res => {
       if (!res.success) {
         return this.appService.showFlashMessage(`${res.msg}`, 'notification is-info animated bounceInDown', 2000);
       } else {
         this.collections.forEach(_collection => {
-          if (_collection._id == res.collection) {
+          if (_collection._id  == res.collection) {
             this.collections.splice(this.collections.indexOf(_collection), 1);
             this.appService.showFlashMessage(`${collection.name} collection successfully deleted.`, 'notification is-success animated bounceInDown', 2000);
           }
@@ -128,6 +128,7 @@ export class MyComponent implements OnInit {
         }
       });
     }
+    console.log(this.collections)
   }
 
   onHide(collection) {
@@ -138,7 +139,7 @@ export class MyComponent implements OnInit {
           _collection.hidden ? _collection.hidden = false : _collection.hidden = true;
         }
       }) :
-      this.ownCollections.forEach(_collection => {
+      this.collections.forEach(_collection => {
         if (_collection._id == collection._id) {
           _collection.hidden ? _collection.hidden = false : _collection.hidden = true;
         }

@@ -10,13 +10,11 @@ import { AuthService } from '../../_services/auth.service';
 export class MainComponent implements OnInit {
   words: any[];
   user: any;
-  addedCollections: any[] = [];
-  ownCollections: any[] = [];
   collections: any[] = [];
 
   sections  = {
     menu: {
-      active: true
+      active: false
     },
     trainings: [
     {
@@ -33,7 +31,7 @@ export class MainComponent implements OnInit {
       description: "Тренировка “Слово-перевод” улучшает навык перевода слов с английского на ваш родной язык, помогая лучше понимать английские тексты и речь.",
       img: "./assets/whale.svg",
       block: false,
-      active: false
+      active: true
     },
     {
       section: "translate-word",
@@ -57,11 +55,7 @@ export class MainComponent implements OnInit {
 
     this.authService.getProfile().subscribe(res => this.user = res.user.username);
 
-    this.appService.getAddedCollections().subscribe(_collections => this.addedCollections = _collections.collections);
-
-    this.appService.getOwnCollections().subscribe(_collections => {this.ownCollections = _collections.collections;});
-
-    this.appService.getCollections().subscribe(_collections => {this.collections = _collections.collections; console.log(_collections);});
+    this.appService.getCollections().subscribe(_collections => this.collections = _collections.collections);
    }
 
   ngOnInit() {
